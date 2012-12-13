@@ -1,5 +1,5 @@
 default['prosody']['install_tpye'] = "package" #source
-
+default['prosody']['domain'] = "#{node['domain']}"
 
 if node['prosody']['install_tpye'] == "package"
   default['prosody']['module_dir'] = "/usr/lib/prosody/modules"
