@@ -19,8 +19,5 @@
 
 package "prosody"
 
-ruby_block "default" do
-  block do
-    include_recipe "prosody"
-  end
-end
+include_recipe "prosody"
+

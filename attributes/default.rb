@@ -2,7 +2,7 @@ default['prosody']['install_tpye'] = "package" #source
 
 
 if node['prosody']['install_tpye'] == "package"
-  default['prosody']['module_dir'] = "/usr/share/prosody/plugins"
+  default['prosody']['module_dir'] = "/usr/lib/prosody/modules"
   default['prosody']['conf_dir'] = "/etc/prosody"
   default['prosody']['cert_dir'] = "/etc/prosody/certs"
 elsif node['prosody']['install_tpye'] == "source"

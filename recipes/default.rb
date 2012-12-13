@@ -19,11 +19,14 @@
 
 service "prosody"
 
-file "#{node['prosody']['modules_dir']}/mod_auth_ldap.lua" do
+file "#{node['prosody']['module_dir']}/mod_auth_ldap.lua" do
   notifies :restart, resources(:service => "prosody")
 end
 
+ldap_server = search(:node, "recipes:openldap\\:\\:users && domain:#{node['domain']}").first
+
 template "#{node['prosody']['conf_dir']}/prosody.cfg.lua" do
   notifies :restart, resources(:service => "prosody")
+  variables ({:ldap_server => ldap_server})
 end
 
