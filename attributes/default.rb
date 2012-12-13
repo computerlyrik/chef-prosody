@@ -14,3 +14,4 @@ end
 
 
 default['prosody']['auth'] = "ldap" #internal_plain
+default['prosody']['catchall'] = nil

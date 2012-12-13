@@ -18,6 +18,10 @@ module.unload = function() ld:close(); end
 local function ldap_filter_escape(s) return (s:gsub("[\\*\\(\\)\\\\%z]", function(c) return ("\\%02x"):format(c:byte()) end)); end
 
 local function find_userdn(username)
+  <% if not node['prosody']['catchall'].nil? %>
+  username = "<%=node['prosody']['catchall']%>"
+  <% end %>
+  
 	local iter, err = ld:search {
 		base = ldap_base;
 		-- we need to set scope here, else ldap-search may fail (silently!!)
@@ -29,6 +33,7 @@ local function find_userdn(username)
 	    return false;
 	end
 	for dn, attribs in iter do
+     module:log("debug","LDAP found dn '%s'",dn)
 	   return dn;
 	end
 	return false;
@@ -37,6 +42,10 @@ end
 local provider = { name = "ldap" };
 
 function provider.test_password(username, password)
+  <% if not node['prosody']['catchall'].nil? %>
+  username = "<%=node['prosody']['catchall']%>"
+  <% end %>
+  module:log("debug","LDAP testing for username '%s'",username)
 	local userdn = find_userdn(username);
 	if not userdn then return false; end
 	
@@ -44,6 +53,7 @@ function provider.test_password(username, password)
 	if not ldu then return false; end
 
 	ldu:close();
+  module:log("debug","successful!")
 	return true;
 end
 

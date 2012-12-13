@@ -144,7 +144,7 @@ ldap_password = "<%=@ldap_server.openldap.anon_pass%>"; -- optional
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
 log = {
-        info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
+        debug = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
         error = "/var/log/prosody/prosody.err";
         -- Syslog:
         { levels = { "error" }; to = "syslog";  };
@@ -157,7 +157,7 @@ log = {
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
-VirtualHost "<%=node['fqdn']%>"
+VirtualHost "<%=node['prosody']['domain']%>"
         -- enabled = false -- Remove this line to enable this host
 
         -- Assign this host a certificate for TLS, otherwise it would use the one
