@@ -144,7 +144,7 @@ ldap_password = "<%=@ldap_server.openldap.anon_pass%>"; -- optional
 -- Logging configuration
 -- For advanced logging see http://prosody.im/doc/logging
 log = {
-        debug = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
+        info = "/var/log/prosody/prosody.log"; -- Change 'info' to 'debug' for verbose logging
         error = "/var/log/prosody/prosody.err";
         -- Syslog:
         { levels = { "error" }; to = "syslog";  };
