@@ -22,8 +22,8 @@ include_recipe "prosody::#{node['prosody']['install_tpye']}"
 
 
 prosody_vhost node['domain'] do
-  admins: ["admin@#{node['domain']}"]
-  modules_enabled: %w[dialback roster saslauth]
+  admins ["admin@#{node['domain']}"]
+  modules_enabled %w[dialback roster saslauth]
   enabled true
 end
 
