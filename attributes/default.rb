@@ -32,7 +32,7 @@ elsif node['prosody']['install_tpye'] == "source"
   default['prosody']['conf_dir'] = "#{node['prosody']['src_dir']}"
   default['prosody']['cert_dir'] = "#{node['prosody']['src_dir']}/certs"
 end
-default['prosody']['vhosts_dir'] = '#{node['prosody']['conf_dir']/vhosts.d'
+default['prosody']['vhosts_dir'] = "#{node['prosody']['conf_dir']}/vhosts.d"
 default['prosody']['pidfile'] = '/var/run/prosody/prosody.pid'
 
 default['prosody']['auth'] = "ldap" #internal_plain

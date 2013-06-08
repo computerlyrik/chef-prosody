@@ -64,7 +64,9 @@ template "#{node['prosody']['conf_dir']}/prosody.cfg.lua" do
   owner "root"
   group "root"
   mode "0644"
-  if ldap variables ({:ldap_server => ldap_server}) end
+  if ldap
+    variables ({:ldap_server => ldap_server})
+  end
   notifies :restart, resources(:service => "prosody")
 end
 

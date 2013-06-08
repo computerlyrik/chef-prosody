@@ -18,5 +18,5 @@
 # limitations under the License.
 #
 
-include_recipe 'prosody::#{node['prosody']['install_tpye']}'
+include_recipe "prosody::#{node['prosody']['install_tpye']}"
 
