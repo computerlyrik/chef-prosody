@@ -1,0 +1,19 @@
+VirtualHost "<%= @config['vhost'] %>"
+
+<% unless @config['admins'].empty? %>
+  admins = {
+  <% @config['admins'].each do |admin| %>
+    <%= %Q{"#{admin}",} %>
+  <% end %>
+  }
+<% end %>
+
+<% unless @config['modules_enabled'].empty? %>
+  modules_enabled = {
+  <% @config['modules_enabled'].each do |mod| %>
+    <%= %Q{"#{mod}";} %>
+  <% end %>
+  };
+<% end %>
+
+  enabled = <%= @config['enabled'] %>
