@@ -29,8 +29,16 @@ Tested on chef 11
 ###default
 
 This recipe ensures prosody is installed and configured.
+Defaults to package installation and sets up a vhost named by your domain.
+
+Set node['prosody']['install_type'] to source if wanted.
+
+Include prosody::package or prosody::source directly to prevent vhost generation on local domain.
 
 ##Attributes
+###install_type
+Will configure the install type. "package" or "source" allowed
+
 ###use_libevent
 This will configure prosody to use libevent. Read more [here](http://prosody.im/doc/libevent). May be true of false, defaults to true.
 
