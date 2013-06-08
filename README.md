@@ -135,8 +135,8 @@ prosody_vhost 'redneck.im'
 ####Creating a Virtual Host with Some Options
 ```ruby
 prosody_vhost 'redneck.im' do
-  admins: %w[jimbob@redneck.im]
-  modules_enabled: %w[dialback roster saslauth]
+  admins %w[jimbob@redneck.im]
+  modules_enabled %w[dialback roster saslauth]
   enabled true
 end
 ```
