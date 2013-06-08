@@ -2,6 +2,7 @@
 # Cookbook Name:: prosody
 # Recipe:: package
 #
+# Copyright 2013, Greg Fitzgerald
 # Copyright 2012, computerlyrik
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,23 +18,5 @@
 # limitations under the License.
 #
 
-service "prosody"
-
-template "#{node['prosody']['module_dir']}/mod_auth_ldap.lua" do
-  mode 0644
-  notifies :restart, resources(:service => "prosody")
-end
-
-if node['prosody']['auth']=="ldap"
-  package "lua-ldap"
-  
-  #install or compile lualdap
-  #to compile packages: liblua5.1-dev libldap-dev
-end
-ldap_server = search(:node, "recipes:openldap\\:\\:users && domain:#{node['domain']}").first
-
-template "#{node['prosody']['conf_dir']}/prosody.cfg.lua" do
-  notifies :restart, resources(:service => "prosody")
-  variables ({:ldap_server => ldap_server})
-end
+include_recipe 'prosody::#{node['prosody']['install_tpye']}'
 
