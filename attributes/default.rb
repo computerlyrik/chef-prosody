@@ -44,6 +44,7 @@ if node['prosody']['install_tpye'] == "package"
   default['prosody']['module_dir'] = "/usr/lib/prosody/modules"
   default['prosody']['conf_dir'] = "/etc/prosody"
   default['prosody']['cert_dir'] = "/etc/prosody/certs"
+  default['prosody']['package'] = "prosody"
   default['prosody']['libevent_package'] = 'liblua5.1-event0'
   default['prosody']['luasec_package'] = 'lua-sec-prosody'
 
