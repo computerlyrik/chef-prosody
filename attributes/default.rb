@@ -98,7 +98,7 @@ default['prosody']['admins'] = ["admin"]
 
 
 
-
+default['prosody']['modules_disabled'] = []
 
 
 
