@@ -12,7 +12,7 @@
 <% unless node['prosody']['admins'].nil? %>
 admins = {
 <% node['prosody']['admins'].each do |admin| %>
-  "<%= @admin %>";
+  "<%= #{admin} %>";
 <% end %>
 }
 <% end %>
@@ -27,28 +27,28 @@ use_libevent = <%= node['prosody']['use_libevent'] %>;
 
 modules_enabled = {
 <% @modules_enabled.each do |mod| %>
-  "<%= @mod %>";
+  "<%= #{mod} %>";
 <% end %>
 };
 
 modules_disabled = {
 <% @modules_disabled.each do |mod| %>
-  "<%= @mod %>";
+  "<%= #{mod} %>";
 <% end %>
 };
 
 
 plugin_paths = {
 <% @plugin_paths.each do |path| -%>
-  "<%= @path %>";
+  "<%= #{path} %>";
 <% end -%>
 }
 
-allow_registration = <%= @allow_registration ? "true" : "false" %>;
+allow_registration = <%= @allow_registration ? "true" : "false" %>
 
-daemonize = <%= @daemonize ? "true" : "false" %>;
+daemonize = <%= @daemonize ? "true" : "false" %>
 
-pidfile = "<%= @pidfile %>";
+pidfile = "<%= @pidfile %>"
 
 
 
@@ -82,7 +82,7 @@ s2s_secure_auth = <%= node['prosody']['s2s_secure_auth'] %>
 <% unless node['prosody']['s2s_insecure_domains'].empty? %>
 s2s_insecure_domains = {
 <% node['prosody']['s2s_insecure_domains'].each do |domain| %>
-  "<%= @domain %>";
+  "<%= #{domain} %>";
 <% end %>
 }
 <% end %>
@@ -91,7 +91,7 @@ s2s_insecure_domains = {
 <% unless node['prosody']['s2s_secure_domains'].empty? %>
 s2s_secure_domains = {
 <% node['prosody']['s2s_secure_domains'].each do |domain| %>
-  "<%= @domain %>";
+  "<%= #{domain} %>";
 <% end %>
 }
 <% end %>
