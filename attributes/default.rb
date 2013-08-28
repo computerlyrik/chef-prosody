@@ -60,6 +60,7 @@ end
 default['prosody']['run_dir'] = "/var/run/prosody/"
 default['prosody']['vhosts_dir'] = "#{node['prosody']['conf_dir']}/vhosts.d"
 default['prosody']['conf_d_dir'] = "/etc/prosody/conf.d"
+default['prosody']['plugin_paths'] = ["{#node['prosody']['module_dir']}"]
 
 default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], "prosody.pid")
 
@@ -80,10 +81,11 @@ default['prosody']['daemonize'] = true
 default['prosody']['catchall'] = nil
 
 
+
 #default['prosody']['chef_plugin_path'] = "/usr/local/lib/prosody/modules/"
 
 
-default['prosody']['admins'] = []
+default['prosody']['admins'] = ["admin"]
 #default['prosody']['modules_enabled'] = [ "roster", "saslauth", "tls", "dialback","disco","private","vcard","legacyauth","version","uptime","time","ping","pep","register","adhoc","admin_adhoc","posix"]
 #default['prosody']['modules_disabled'] = []
 
