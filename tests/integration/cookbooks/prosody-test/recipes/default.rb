@@ -45,3 +45,15 @@ prosody_vhost 'flyfisher.com' do
   action :remove
 end
 
+
+prosody_module "roster" do 
+  action :install, :enable
+end
+
+prosody_module "saslauth" do
+  action :install, :enable
+end
+
+                                            private vcard version uptime time
+                                            ping pep register admin_adhoc
+
