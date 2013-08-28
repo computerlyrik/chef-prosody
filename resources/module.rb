@@ -1,4 +1,4 @@
-actions :add, :install, :delete
+actions :add, :install, :delete, :enable, :disable
 default_action :add
 
 attribute :module, :name_attribute => true, :kind_of => String, :required => true

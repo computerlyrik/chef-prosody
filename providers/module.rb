@@ -14,10 +14,11 @@ action :install do
   install_files
 end
 
-action :delete do
+action :disable do
   ruby_block "Unconfigure module #{new_resource.module}" do
     block do
       node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] - [ new_resource.module ]
+      node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [ new_resource.module ]
       node.save
     end
     only_if { current_resource.configured }
