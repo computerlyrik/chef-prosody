@@ -25,24 +25,35 @@ def whyrun_supported?
   true
 end
 
+def load_current_resource
+  @username = new_resource.username
+  @password = new_resource.password
+  @vhosts = new_resource.vhosts
+end
+
 action :create do
-  new_resource.vhosts.each do |vhost|
-    Chef::Log.info "Create user #{new_resource.username}@#{vhost}"
-    cmd = "prosodyctl register #{new_resource.username} #{vhost} #{new_resource.password}"
-    Chef::Log.debug(cmd)
-    shell_out!(cmd)
-    Chef::Log.info("User created")
+  @vhosts.each do |vhost|
+    Chef::Log.info "Create user #{@username}@#{vhost}"
+    cmdStr = "prosodyctl register #{@username}"
+    cmdStr << " #{vhost} #{@password}"
+    cmd = Mixlib::ShellOut.new(cmdStr)
+    cmd.run_command
+    Chef::Log.debug("Create user? #{cmdStr}")
+    Chef::Log.debug("Create user?? #{cmd.stdout}")
+    cmd.error!
   end
   new_resource.updated_by_last_action(true)
 end
 
 action :remove do
-  new_resource.vhosts.each do |vhost|
-    Chef::Log.info "Removing user #{new_resource.username}@#{vhost}"
-    cmd = "prosodyctl deluser #{new_resource.username}@#{vhost}"
-    Chef::Log.debug(cmd)
-    shell_out!(cmd)
-    Chef::Log.info("User remove")
+  @vhosts.each do |vhost|
+    Chef::Log.info "Removing user #{@username}@#{vhost}"
+    cmdStr = "prosodyctl deluser #{@username}@#{vhost}"
+    cmd = Mixlib::ShellOut.new(cmdStr)
+    cmd.run_command
+    Chef::Log.debug("Remove user? #{cmdStr}")
+    Chef::Log.debug("Remove user?? #{cmd.stdout}")
+    cmd.error!
   end
   new_resource.updated_by_last_action(true)
 end

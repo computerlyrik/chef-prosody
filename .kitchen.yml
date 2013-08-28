@@ -1,22 +1,21 @@
 ---
-driver_plugin: digitalocean
+driver_plugin: docker
 driver_config:
-  digitalocean_client_id: <%= ENV['DO_CLIENT_ID'] %>
-  digitalocean_api_key: <%= ENV['DO_API_KEY'] %>
-  flavor_id: 66
-  ssh_key_ids: <%= ENV['DO_SSH_KEY_IDS'] %>
+  docker_path: lxc-docker
   require_chef_omnibus: latest
 
 platforms:
 - name: ubuntu-12.10
   driver_config:
-    image_id: 25489
+    image: ubuntu:12.10
+    platform: ubuntu
   run_list:
   - recipe[apt]
 
 - name: debian-6.0.7
   driver_config:
-    image_id: 12573
+    image: tianon/debian:6.0.7
+    platform: debian
   run_list:
   - recipe[apt]
 
@@ -27,4 +26,3 @@ suites:
   - recipe[prosody-test]
   - recipe[minitest-handler]
   attributes:
-

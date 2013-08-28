@@ -17,13 +17,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+
 def whyrun_supported?
   true
 end
 
 action :create do
   Chef::Log.info "Adding #{new_resource.vhost} to #{node['prosody']['vhosts_dir']}"
-  template "#{node['prosody']['vhosts_dir']}/#{new_resource.vhost}.cfg.lua" do
+  template vhost_config_file do
     source "vhost.cfg.lua.erb"
     cookbook "prosody"
     owner "root"
@@ -34,9 +35,11 @@ action :create do
         'vhost' => new_resource.vhost,
         'admins' => new_resource.admins,
         'modules_enabled' => new_resource.modules_enabled,
-        'enabled' => new_resource.enabled
+        'enabled' => new_resource.enabled,
+        'ssl' => new_resource.ssl
       }
     })
+    generate_ssl if new_resource.ssl
     notifies :reload, "service[prosody]"
   end
   new_resource.updated_by_last_action(true)
@@ -45,10 +48,11 @@ end
 action :remove do
   if ::File.exists?("#{node['prosody']['vhosts_dir']}/#{new_resource.vhost}.cfg.lua")
     Chef::Log.info "Removing #{new_resource.vhost} from #{node['prosody']['vhosts_dir']}"
-    file "#{node['prosody']['vhosts_dir']}/#{new_resource.vhost}.cfg.lua" do
+    file vhost_config_file do
       action :delete
       notifies :reload, "service[prosody]"
     end
+   remove_ssl
    new_resource.updated_by_last_action(true)
   end
 end
