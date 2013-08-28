@@ -61,7 +61,7 @@ end
 default['prosody']['run_dir'] = "/var/run/prosody/"
 default['prosody']['vhosts_dir'] = "#{node['prosody']['conf_dir']}/vhosts.d"
 default['prosody']['conf_d_dir'] = "/etc/prosody/conf.d"
-default['prosody']['plugin_paths'] = ["{#node['prosody']['module_dir']}"]
+default['prosody']['plugin_paths'] = ["#{node['prosody']['module_dir']}"]
 
 default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], "prosody.pid")
 
