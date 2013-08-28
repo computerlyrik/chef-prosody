@@ -46,7 +46,5 @@ end
   package pkg
 end
 
-directory "/var/log/prosody/"
-
 include_recipe "prosody"
 

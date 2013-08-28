@@ -23,7 +23,7 @@ directory node['prosody']['vhosts_dir'] do
 end
 
 
-ldap =  node['prosody']['auth']=="ldap"
+ldap =  node['prosody']['authentication']=="ldap"
 
 if ldap
   package "lua-ldap"

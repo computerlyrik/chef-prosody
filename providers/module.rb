@@ -1,13 +1,11 @@
-action :add do
-  install_files
-
+action :enable do
   ruby_block "Configure module #{new_resource.module}" do
     block do
       node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] + [ new_resource.module ]
       node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [ new_resource.module ]
       node.save
     end
-    notifies :create, "template[configure prosody]"
+    notifies :create, "template[#{node['prosody']['conf_dir']}/prosody.cfg.lua]"
     not_if { current_resource.configured }
   end
 end
