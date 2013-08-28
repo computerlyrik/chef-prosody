@@ -17,6 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+include Chef::Prosody::Helpers
 
 def whyrun_supported?
   true
