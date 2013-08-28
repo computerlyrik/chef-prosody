@@ -66,7 +66,7 @@ default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], "prosody
 default['prosody']['user'] = "prosody"
 default['prosody']['group'] = "prosody"
 default['prosody']['storage'] = 'internal'
-default['prosody']['authentication'] = "ldap" #internal_plain
+default['prosody']['authentication'] = "internal_plain" #ldap
 default['prosody']['use_libevent'] = true
 default['prosody']['allow_registration'] = false
 
