@@ -1,16 +1,5 @@
--- Prosody Example Configuration File
---
--- Information on configuring Prosody can be found on our
--- website at http://prosody.im/doc/configure
---
--- Tip: You can check that the syntax of this file is correct
--- when you have finished by running: luac -p prosody.cfg.lua
--- If there are any errors, it will let you know what and where
--- they are, otherwise it will keep quiet.
---
--- The only thing left to do is rename this file to remove the .dist ending, and fill in the
--- blanks. Good luck, and happy Jabbering!
-
+-- according to http://prosody.im/doc/configure
+-- check with luac -p prosody.cfg.lua
 
 ---------- Server-wide settings ----------
 -- Settings in this section apply to the whole server and are the default settings
@@ -23,7 +12,7 @@
 <% unless node['prosody']['admins'].nil? %>
 admins = {
 <% node['prosody']['admins'].each do |admin| %>
-  <%= %Q{"#{admin}",} %>
+  "<%= @admin %>";
 <% end %>
 }
 <% end %>
@@ -38,13 +27,13 @@ use_libevent = <%= node['prosody']['use_libevent'] %>;
 
 modules_enabled = {
 <% @modules_enabled.each do |mod| %>
-  <%= %Q{"#{mod}";} %>
+  "<%= @mod %>";
 <% end %>
 };
 
 modules_disabled = {
 <% @modules_disabled.each do |mod| %>
-  <%= %Q{"#{mod}";} %>
+  "<%= @mod %>";
 <% end %>
 };
 
@@ -93,7 +82,7 @@ s2s_secure_auth = <%= node['prosody']['s2s_secure_auth'] %>
 <% unless node['prosody']['s2s_insecure_domains'].empty? %>
 s2s_insecure_domains = {
 <% node['prosody']['s2s_insecure_domains'].each do |domain| %>
-  <%= %Q{"#{domain}",} %>
+  "<%= @domain %>";
 <% end %>
 }
 <% end %>
@@ -102,7 +91,7 @@ s2s_insecure_domains = {
 <% unless node['prosody']['s2s_secure_domains'].empty? %>
 s2s_secure_domains = {
 <% node['prosody']['s2s_secure_domains'].each do |domain| %>
-  <%= %Q{"#{domain}",} %>
+  "<%= @domain %>";
 <% end %>
 }
 <% end %>

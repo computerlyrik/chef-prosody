@@ -23,9 +23,10 @@ directory node['prosody']['vhosts_dir'] do
 end
 
 
-ldap =  node['prosody']['authentication']=="ldap"
+ldap = node['prosody']['authentication']=="ldap"
 
 if ldap
+  Chef::Log.info "preparing for ldap"
   package "lua-ldap"
   #install or compile lualdap
   #to compile packages: liblua5.1-dev libldap-dev
