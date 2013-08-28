@@ -44,13 +44,13 @@ if node['prosody']['install_tpye'] == "package"
   default['prosody']['module_dir'] = "/usr/lib/prosody/modules"
   default['prosody']['conf_dir'] = "/etc/prosody"
   default['prosody']['cert_dir'] = "/etc/prosody/certs"
-  default['prosody']['package'] = 'prosody-0.9'
   default['prosody']['libevent_package'] = 'liblua5.1-event0'
   default['prosody']['luasec_package'] = 'lua-sec-prosody'
 
-elsif node['prosody']['install_tpye'] == "source"
+elsif node['prosody']['install_tpye'] == "source" #git
 
   default['prosody']['src_dir'] = "/prosody"
+  default['prosody']['version'] = '0.9'
   default['prosody']['module_dir'] = "#{node['prosody']['src_dir']}/plugins"
   default['prosody']['conf_dir'] = "#{node['prosody']['src_dir']}"
   default['prosody']['cert_dir'] = "#{node['prosody']['src_dir']}/certs"
