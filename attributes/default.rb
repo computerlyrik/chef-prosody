@@ -21,6 +21,24 @@
 default['prosody']['install_tpye'] = "package" #source
 default['prosody']['domain'] = "#{node['domain']}"
 
+
+
+case node["platform_family"]
+when "debian"
+  default["prosody"]["repository"] = "debian"
+  default["prosody"]["install_method"] = "package"
+when "fedora"
+  default["prosody"]["repository"] = "epel"
+  default["prosody"]["install_method"] = "package"
+when "ubuntu"
+  default["prosody"]["repository"] = "ubuntu"
+  default["prosody"]["install_method"] = "package"
+else
+  default["prosody"]["repository"] = nil
+  default["prosody"]["install_method"] = "source"
+end
+
+
 if node['prosody']['install_tpye'] == "package"
   default['prosody']['module_dir'] = "/usr/lib/prosody/modules"
   default['prosody']['conf_dir'] = "/etc/prosody"
@@ -32,7 +50,35 @@ elsif node['prosody']['install_tpye'] == "source"
   default['prosody']['conf_dir'] = "#{node['prosody']['src_dir']}"
   default['prosody']['cert_dir'] = "#{node['prosody']['src_dir']}/certs"
 end
+
+
+
+default['prosody']['user'] = "prosody"
+default['prosody']['group'] = "prosody"
+
+
+
+default['prosody']['run_dir'] = "/var/run/prosody/"
 default['prosody']['vhosts_dir'] = "#{node['prosody']['conf_dir']}/vhosts.d"
+
+
+default['prosody']['chef_plugin_path'] = "/usr/local/lib/prosody/modules/"
+default['prosody']['plugin_paths'] = [ node['prosody']['chef_plugin_path'] ]
+default['prosody']['conf_d_dir'] = "/etc/prosody/conf.d"
+
+default['prosody']['admins'] = []
+default['prosody']['modules_enabled'] = [ "roster", "saslauth", "tls", "dialback","disco","private","vcard","legacyauth","version","uptime","time","ping","pep","register","adhoc","admin_adhoc","posix"]
+default['prosody']['modules_disabled'] = []
+default['prosody']['authentication'] = "internal_plain"
+default['prosody']['use_libevent'] = false
+default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], "prosody.pid")
+default['prosody']['daemonize'] = true
+
+
+
+
+
+
 default['prosody']['pidfile'] = '/var/run/prosody/prosody.pid'
 
 default['prosody']['auth'] = "ldap" #internal_plain

@@ -35,25 +35,33 @@ use_libevent = <%= node['prosody']['use_libevent'] %>;
 -- This is the list of modules Prosody will load on startup.
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.
 -- Documentation on modules can be found at: http://prosody.im/doc/modules
-<% unless node['prosody']['modules_enabled'].empty? %>
+
 modules_enabled = {
-<% node['prosody']['modules_enabled'].each do |mod| %>
+<% @modules_enabled.each do |mod| %>
   <%= %Q{"#{mod}";} %>
 <% end %>
 };
-<% end %>
 
-
--- Required for init scripts and prosodyctl
-pidfile = "<%= node['prosody']['pidfile'] %>"
-
--- These modules are auto-loaded, but should you want
--- to disable them then uncomment them here:
 modules_disabled = {
-	-- "offline"; -- Store offline messages
-	-- "c2s"; -- Handle client connections
-	-- "s2s"; -- Handle server-to-server connections
+<% @modules_disabled.each do |mod| %>
+  <%= %Q{"#{mod}";} %>
+<% end %>
 };
+
+
+plugin_paths = {
+<% @plugin_paths.each do |path| -%>
+  "<%= @path %>";
+<% end -%>
+}
+
+allow_registration = <%= @allow_registration ? "true" : "false" %>;
+
+daemonize = <%= @daemonize ? "true" : "false" %>;
+
+pidfile = "<%= @pidfile %>";
+
+
 
 -- Disable account creation by default, for security
 -- For more information see http://prosody.im/doc/creating_accounts
@@ -107,7 +115,8 @@ s2s_secure_domains = {
 -- for information about using the hashed backend.
 
 
-authentication = "<%=node['prosody']['auth']%>"
+authentication = "<%= @authentication %>"
+
 <% if node['prosody']['auth'] == "ldap" %>
 ldap_server = "<%=@ldap_server.openldap.server%>";
 ldap_base = "<%=@ldap_server.openldap.users_root%>";
@@ -144,6 +153,7 @@ log = {
 -- Settings under each VirtualHost entry apply *only* to that host.
 
 Include "vhosts.d/*.lua"
+Include "conf.d/*.cfg.lua"
 
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
