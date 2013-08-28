@@ -14,6 +14,6 @@ recipe 'prosody', 'Installs sudo and configures prosody'
   depends dep
 end
 
-%w{ debian ubuntu centos }.each do |os|
+%w{ debian ubuntu centos fedora }.each do |os|
   supports os
 end
