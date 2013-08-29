@@ -6,13 +6,13 @@
 include_recipe 'prosody'
 
 prosody_vhost 'redneck.im' do
-  admins %w[jimbob@redneck.im daryl@redneck.im]
-  modules_enabled %w[dialback roster saslauth]
+  admins ['jimbob@redneck.im', 'daryl@redneck.im']
+  modules_enabled ['dialback', 'roster', 'saslauth']
   enabled true
 end
 
 prosody_vhost 'example.com' do
-  admins %w[root@example.com]
+  admins ["root@example.com"]
   enabled false
 end
 
@@ -24,17 +24,17 @@ prosody_vhost 'axechat.com'
 
 prosody_user 'jimbob' do
   password 'salmonmaster93'
-  vhosts %w[redneck.im]
+  vhosts "redneck.im"
 end
 
 prosody_user 'daryl' do
-  password 'bigbuckhunt3r'
-  vhosts %w[redneck.im]
+  password  'bigbuckhunt3r'
+  vhosts "redneck.im"
 end
 
 prosody_user 'otherbrotherdaryl' do
   password 'duckzilla'
-  vhosts %w[axechat.com]
+  vhosts ["redneck.im", "axechat.com"]
 end
 
 prosody_user 'otherbrotherdaryl' do
@@ -47,13 +47,9 @@ end
 
 
 prosody_module "roster" do 
-  action :install, :enable
+  action [:install, :enable]
 end
 
 prosody_module "saslauth" do
-  action :install, :enable
+  action [:install, :enable]
 end
-
-                                            private vcard version uptime time
-                                            ping pep register admin_adhoc
-

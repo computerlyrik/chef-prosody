@@ -18,16 +18,4 @@
 # limitations under the License.
 #
 
-include_recipe "prosody::install_#{node['prosody']['install_tpye']}"
-
-
-prosody_vhost node['domain'] do
-  admins ["admin@#{node['domain']}"]
-  modules_enabled %w[dialback roster saslauth]
-  enabled true
-end
-
-prosody_user 'admin' do
-  password 'p4ssw0rd'
-  vhosts [node['domain']]
-end
+include_recipe "prosody::install_#{node['prosody']['install_type']}"

@@ -1,0 +1,5 @@
+ldap_server   = "<%= @ldap_server['openldap']['server'] %>";
+ldap_base     = "<%= @ldap_server['openldap']['users_root'] %>";
+ldap_rootdn   = "<%= @ldap_server['openldap']['anon_binddn'] %>"; -- optional
+ldap_password = "<%= @ldap_server['openldap']['anon_pass'] %>"; -- optional
+-- ldap_filter = "(authorizedService=jabber)"; -- optional

@@ -17,43 +17,46 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-require 'chef/mixin/shell_out'
-require 'chef/mixin/language'
-include Chef::Mixin::ShellOut
+use_inline_resources
 
 def whyrun_supported?
   true
 end
 
 def load_current_resource
-  @username = new_resource.username
-  @password = new_resource.password
-  @vhosts = new_resource.vhosts
+  @current_resource = Chef::Resource::ProsodyUser.new(@new_resource.name)
+  @current_resource.name(@new_resource.name)
+  @current_resource.username(@new_resource.username)
+  @current_resource.password(@new_resource.password)
+  @current_resource.vhosts(Array(@new_resource.vhosts))
 end
 
 action :create do
-  @vhosts.each do |vhost|
-    Chef::Log.info "Create user #{@username}@#{vhost}"
-    cmdStr = "prosodyctl register #{@username}"
-    cmdStr << " #{vhost} #{@password}"
-    cmd = Mixlib::ShellOut.new(cmdStr)
-    cmd.run_command
-    Chef::Log.debug("Create user? #{cmdStr}")
-    Chef::Log.debug("Create user?? #{cmd.stdout}")
-    cmd.error!
+  @current_resource.vhosts.each do |vhost|
+    execute "Create user #{jid(vhost)}" do
+      command "prosodyctl register #{current_resource.username} #{vhost} #{current_resource.password}"
+      not_if { jid_exists?(jid(vhost)) }
+    end
   end
-  new_resource.updated_by_last_action(true)
 end
 
 action :remove do
-  @vhosts.each do |vhost|
-    Chef::Log.info "Removing user #{@username}@#{vhost}"
-    cmdStr = "prosodyctl deluser #{@username}@#{vhost}"
-    cmd = Mixlib::ShellOut.new(cmdStr)
-    cmd.run_command
-    Chef::Log.debug("Remove user? #{cmdStr}")
-    Chef::Log.debug("Remove user?? #{cmd.stdout}")
-    cmd.error!
+  @current_resource.vhosts.each do |vhost|
+    execute "Removing user #{jid(vhost)}" do
+      command "prosodyctl deluser #{jid(vhost)}"
+      only_if { jid_exists?(jid(vhost)) }
+    end
   end
-  new_resource.updated_by_last_action(true)
+end
+
+def jids
+  return @current_resource.vhost.map {|v| jid(v,new_resource.username)}
+end
+
+def jid(domain, username = current_resource.username)
+  return username + "@" + domain
+end
+
+def jid_exists?(jid)
+  Mixlib::ShellOut.new("prosodyctl mod_listusers").run_command.stdout.split.include?(jid)
 end

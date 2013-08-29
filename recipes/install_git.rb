@@ -24,11 +24,9 @@ hg node['prosody']['src_dir'] do
   action :sync
 end
 
-
 %w{lua5.1 liblua5.1-dev libidn11-dev libssl-dev}.each do |pkg|
   package pkg
 end
-
 
 execute "./configure --ostype=debian" do
   cwd node['prosody']['scr_dir']
