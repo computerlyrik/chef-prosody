@@ -22,6 +22,12 @@ directory node['prosody']['vhosts_dir'] do
     action :create
 end
 
+directory node['prosody']['ssl_dir'] do
+    owner "root"
+    group "prosody"
+    mode "0750"
+    action :create
+end
 
 ldap = node['prosody']['authentication']=="ldap"
 
