@@ -1,5 +1,7 @@
 VirtualHost "<%= @config['vhost'] %>"
 
+  enabled = <%= @config['enabled'] %>
+
 <% unless @config['admins'].empty? %>
   admins = {
   <% @config['admins'].each do |admin| %>
@@ -16,4 +18,11 @@ VirtualHost "<%= @config['vhost'] %>"
   };
 <% end %>
 
-  enabled = <%= @config['enabled'] %>
+<% if @config['ssl'] %>
+  ssl = {
+    key = "<%= ::File.join(node['prosody']['ssl_dir'], "#{@config['vhost']}.key") %>";
+    certificate = "<%= ::File.join(node['prosody']['ssl_dir'], "#{@config['vhost']}.crt") %>";
+  }
+<% end %>
+
+
