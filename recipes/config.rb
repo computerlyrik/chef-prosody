@@ -49,7 +49,7 @@ template ::File.join(node['prosody']['conf_dir'], "prosody.cfg.lua") do
     :use_libevent => node['prosody']['use_libevent'],
     :pidfile => node['prosody']['pidfile'],
     :daemonize => node['prosody']['daemonize'],
-    :plugin_paths => node['prosody']['plugin_paths'],
+    :plugin_paths => node['prosody']['plugin_paths']
   )
   notifies :restart, "service[prosody]"
 end
