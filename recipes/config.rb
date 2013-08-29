@@ -29,22 +29,14 @@ directory node['prosody']['ssl_dir'] do
     action :create
 end
 
-ldap = node['prosody']['authentication']=="ldap"
+include_recipe "prosody::ldap" if node['prosody']['authentication'] == "ldap"
 
-if ldap
-  Chef::Log.info "preparing for ldap"
-  package "lua-ldap"
-  #install or compile lualdap
-  #to compile packages: liblua5.1-dev libldap-dev
-  
-  template "#{node['prosody']['module_dir']}/mod_auth_ldap.lua" do
-    mode 0644
-    notifies :restart, resources(:service => "prosody")
-  end
-  ldap_server = search(:node, "recipes:openldap\\:\\:users && domain:#{node['domain']}").first
+prosody_module "listusers" do
+  files( "mod_listusers.lua" => "http://prosody.im/files/mod_listusers.lua" )
+  action [:install, :enable]
 end
 
-template "#{node['prosody']['conf_dir']}/prosody.cfg.lua" do
+template ::File.join(node['prosody']['conf_dir'], "prosody.cfg.lua") do
   source "prosody.cfg.lua.erb"
   owner "root"
   group node["prosody"]["group"]
@@ -58,7 +50,6 @@ template "#{node['prosody']['conf_dir']}/prosody.cfg.lua" do
     :pidfile => node['prosody']['pidfile'],
     :daemonize => node['prosody']['daemonize'],
     :plugin_paths => node['prosody']['plugin_paths'],
-    :ldap_server => (ldap_server if ldap)
   )
   notifies :restart, "service[prosody]"
 end

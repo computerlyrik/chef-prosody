@@ -18,10 +18,7 @@
 # limitations under the License.
 #
 
-default['prosody']['install_tpye'] = "package" #source
-default['prosody']['domain'] = "#{node['domain']}"
-
-
+default['prosody']['install_type'] = "package" #source
 
 case node["platform_family"]
 when "debian"
@@ -30,86 +27,58 @@ when "debian"
 when "fedora"
   default["prosody"]["repository"] = "epel"
   default["prosody"]["install_method"] = "package"
-when "ubuntu"
-  default["prosody"]["repository"] = "ubuntu"
-  default["prosody"]["install_method"] = "package"
 else
   default["prosody"]["repository"] = nil
   default["prosody"]["install_method"] = "source"
 end
 
-
-if node['prosody']['install_tpye'] == "package"
-
-  default['prosody']['module_dir'] = "/usr/lib/prosody/modules"
+case node['prosody']['install_type']
+when "package"
+  default['prosody']['plugin_dir'] = "/usr/local/lib/prosody/modules"
   default['prosody']['conf_dir'] = "/etc/prosody"
   default['prosody']['package'] = "prosody"
   default['prosody']['libevent_package'] = 'liblua5.1-event0'
   default['prosody']['luasec_package'] = 'lua-sec-prosody'
-
-elsif node['prosody']['install_tpye'] == "source" #git
-
+when "source" #git
   default['prosody']['src_dir'] = "/prosody"
   default['prosody']['version'] = '0.9'
-  default['prosody']['module_dir'] = "#{node['prosody']['src_dir']}/plugins"
-  default['prosody']['conf_dir'] = "#{node['prosody']['src_dir']}"
-
+  default['prosody']['plugin_dir'] = ::File.join(node['prosody']['src_dir'], "plugins")
+  default['prosody']['conf_dir'] = node['prosody']['src_dir']
 end
 
-default['prosody']['run_dir'] = "/var/run/prosody/"
-default['prosody']['vhosts_dir'] = "#{node['prosody']['conf_dir']}/vhosts.d"
-default['prosody']['conf_d_dir'] = "/etc/prosody/conf.d"
-default['prosody']['plugin_paths'] = ["#{node['prosody']['module_dir']}"]
-default['prosody']['ssl_dir'] = ::File.join(node['prosody']['conf_dir'], 'certs')
+default['prosody']['run_dir']      = "/var/run/prosody/"
+default['prosody']['vhosts_dir']   = ::File.join(node['prosody']['conf_dir'], "vhosts.d")
+default['prosody']['conf_d_dir']   = ::File.join(node['prosody']['conf_dir'], "conf.d")
+default['prosody']['plugin_paths'] = [ node['prosody']['plugin_dir'] ] #http://prosody.im/doc/installing_modules
+default['prosody']['ssl_dir']      = ::File.join(node['prosody']['conf_dir'], 'certs')
 
 default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], "prosody.pid")
 
-default['prosody']['user'] = "prosody"
-default['prosody']['group'] = "prosody"
-default['prosody']['storage'] = 'internal'
-default['prosody']['authentication'] = "internal_plain" #ldap
-default['prosody']['use_libevent'] = true
+default['prosody']['user']               = "prosody"
+default['prosody']['group']              = "prosody"
+default['prosody']['storage']            = 'internal'
+default['prosody']['authentication']     = "internal_plain" #ldap
+default['prosody']['use_libevent']       = true
 default['prosody']['allow_registration'] = false
 
 default['prosody']['c2s_require_encryption'] = true
-default['prosody']['s2s_secure_auth'] = true
-default['prosody']['s2s_insecure_domains'] = %w[]
-default['prosody']['s2s_secure_domains'] = %w[]
+default['prosody']['s2s_secure_auth']        = true
+default['prosody']['s2s_insecure_domains']   = []
+default['prosody']['s2s_secure_domains']     = []
 
 default['prosody']['daemonize'] = true
 
 default['prosody']['catchall'] = nil
 
 
-
-#default['prosody']['chef_plugin_path'] = "/usr/local/lib/prosody/modules/"
-
-
 default['prosody']['admins'] = ["admin"]
-#default['prosody']['modules_enabled'] = [ "roster", "saslauth", "tls", "dialback","disco","private","vcard","legacyauth","version","uptime","time","ping","pep","register","adhoc","admin_adhoc","posix"]
-#default['prosody']['modules_disabled'] = []
-
-
-
-
-
-
-
-
-
 default['prosody']['modules_disabled'] = []
-
-
-
-
 # For more information http://prosody.im/doc/modules_enabled
-default['prosody']['modules_enabled'] = %w[ roster saslauth tls dialback disco
+default['prosody']['modules_enabled'] = %w( roster saslauth tls dialback disco
                                             private vcard version uptime time
-                                            ping pep register admin_adhoc posix]
-
+                                            ping pep register admin_adhoc posix)
 
 # Rest of the -subj values are defaulted to your vhost
 default['ssl']['country'] = 'NL'
 default['ssl']['state'] = 'NH'
 default['ssl']['city'] = 'AMS'
-

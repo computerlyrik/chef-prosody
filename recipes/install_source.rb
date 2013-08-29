@@ -7,10 +7,7 @@ ark "prosody" do
   notifies :restart, "service[prosody]"
 end
 
-
-
 directory "/var/log/prosody/"
-
 
 include_recipe "prosody::config"
 

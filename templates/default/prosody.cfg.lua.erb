@@ -19,7 +19,7 @@ admins = {
 
 -- Enable use of libevent for better performance under high load
 -- For more information see: http://prosody.im/doc/libevent
-use_libevent = <%= node['prosody']['use_libevent'] %>
+use_libevent = <%= @use_libevent ? "true" : "false" %>
 
 -- This is the list of modules Prosody will load on startup.
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.
@@ -106,20 +106,11 @@ s2s_secure_domains = {
 
 authentication = "<%= @authentication %>"
 
-<% if node['prosody']['auth'] == "ldap" %>
-ldap_server = "<%=@ldap_server.openldap.server%>";
-ldap_base = "<%=@ldap_server.openldap.users_root%>";
-ldap_rootdn = "<%=@ldap_server.openldap.anon_binddn%>"; -- optional
-ldap_password = "<%=@ldap_server.openldap.anon_pass%>"; -- optional
--- ldap_filter = "(authorizedService=jabber)"; -- optional
-<% end %>
-
 -- Select the storage backend to use. By default Prosody uses flat files
 -- in its configured data directory, but it also supports more backends
 -- through modules. An "sql" backend is included by default, but requires
 -- additional dependencies. See http://prosody.im/doc/storage for more info.
 
---storage = "sql" -- Default is "internal"
 storage = "<%= node['prosody']['storage'] %>"
 
 -- For the "sql" backend, you can uncomment *one* of the below to configure:
@@ -137,12 +128,13 @@ log = {
 	-- "*console"; -- Log to the console, useful for debugging with daemonize=false
 }
 
+Include "conf.d/*.cfg.lua"
+
 ----------- Virtual hosts -----------
 -- You need to add a VirtualHost entry for each domain you wish Prosody to serve.
 -- Settings under each VirtualHost entry apply *only* to that host.
 
 Include "vhosts.d/*.lua"
-Include "conf.d/*.cfg.lua"
 
 ------ Components ------
 -- You can specify components to add hosts that provide special services,
