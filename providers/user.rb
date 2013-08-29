@@ -35,6 +35,7 @@ action :create do
   @current_resource.vhosts.each do |vhost|
     execute "Create user #{jid(vhost)}" do
       command "prosodyctl register #{current_resource.username} #{vhost} #{current_resource.password}"
+      not_if { jid_exists?(jid(vhost)) }
     end
   end
 end
@@ -43,6 +44,7 @@ action :remove do
   @current_resource.vhosts.each do |vhost|
     execute "Removing user #{jid(vhost)}" do
       command "prosodyctl deluser #{jid(vhost)}"
+      only_if { jid_exists?(jid(vhost)) }
     end
   end
 end
@@ -53,4 +55,8 @@ end
 
 def jid(domain, username = current_resource.username)
   return username + "@" + domain
+end
+
+def jid_exists?(jid)
+  Mixlib::ShellOut.new("prosodyctl mod_listusers").run_command.stdout.split.include?(jid)
 end

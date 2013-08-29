@@ -33,7 +33,7 @@ include_recipe "prosody::ldap" if node['prosody']['authentication'] == "ldap"
 
 prosody_module "listusers" do
   files( "mod_listusers.lua" => "http://prosody.im/files/mod_listusers.lua" )
-  action [:install, :enable]
+  action :install
 end
 
 template ::File.join(node['prosody']['conf_dir'], "prosody.cfg.lua") do
