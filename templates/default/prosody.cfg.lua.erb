@@ -12,14 +12,14 @@
 <% unless node['prosody']['admins'].nil? %>
 admins = {
 <% node['prosody']['admins'].each do |admin| %>
-  "<%= #{admin} %>";
+  "<%= admin %>";
 <% end %>
 }
 <% end %>
 
 -- Enable use of libevent for better performance under high load
 -- For more information see: http://prosody.im/doc/libevent
-use_libevent = <%= node['prosody']['use_libevent'] %>;
+use_libevent = <%= node['prosody']['use_libevent'] %>
 
 -- This is the list of modules Prosody will load on startup.
 -- It looks for mod_modulename.lua in the plugins folder, so make sure that exists too.
@@ -27,20 +27,20 @@ use_libevent = <%= node['prosody']['use_libevent'] %>;
 
 modules_enabled = {
 <% @modules_enabled.each do |mod| %>
-  "<%= #{mod} %>";
+  "<%= mod %>";
 <% end %>
-};
+}
 
 modules_disabled = {
 <% @modules_disabled.each do |mod| %>
-  "<%= #{mod} %>";
+  "<%= mod %>";
 <% end %>
-};
+}
 
 
 plugin_paths = {
 <% @plugin_paths.each do |path| -%>
-  "<%= #{path} %>";
+  "<%= path %>";
 <% end -%>
 }
 
@@ -82,7 +82,7 @@ s2s_secure_auth = <%= node['prosody']['s2s_secure_auth'] %>
 <% unless node['prosody']['s2s_insecure_domains'].empty? %>
 s2s_insecure_domains = {
 <% node['prosody']['s2s_insecure_domains'].each do |domain| %>
-  "<%= #{domain} %>";
+  "<%= domain %>";
 <% end %>
 }
 <% end %>
@@ -91,7 +91,7 @@ s2s_insecure_domains = {
 <% unless node['prosody']['s2s_secure_domains'].empty? %>
 s2s_secure_domains = {
 <% node['prosody']['s2s_secure_domains'].each do |domain| %>
-  "<%= #{domain} %>";
+  "<%= domain %>";
 <% end %>
 }
 <% end %>
