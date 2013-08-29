@@ -107,3 +107,9 @@ default['prosody']['modules_enabled'] = %w[ roster saslauth tls dialback disco
                                             private vcard version uptime time
                                             ping pep register admin_adhoc posix]
 
+
+# Rest of the -subj values are defaulted to your vhost
+default['ssl']['country'] = 'NL'
+default['ssl']['state'] = 'NH'
+default['ssl']['city'] = 'AMS'
+
