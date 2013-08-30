@@ -32,7 +32,7 @@ execute "./configure --ostype=debian" do
   cwd node['prosody']['scr_dir']
   action :nothing
   subscribes :run, resources(:hg => node['prosody']['src_dir'])
-  notifies :run, resources(:execute => "make")
+  notifies :run, "execute[make]")
 end
 
 execute "make" do
