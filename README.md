@@ -1,4 +1,4 @@
-#Prosody Chef Cookbook [![Build Status](https://secure.travis-ci.org/gregf/cookbook-prosody.png)](http://travis-ci.org/gregf/cookbook-prosody)
+#Prosody Chef Cookbook
 
 ##Description
 
@@ -7,7 +7,7 @@ The default recipe will install and configure [Prosody](http://prosody.im) xmpp 
 The cookbook also provides a Chef LWRP to manage user accounts and virtualhosts.
 
 * Opscode Community Site: http://community.opscode.com/cookbooks/prosody
-* Source Code: http://github.com/gregf/cookbook-prosody
+* Source Code: http://github.com/computerlyrik/chef-prosody
 
 ##Requirements
 
@@ -214,10 +214,13 @@ e.g.
 
 ##License and Authors
 
-Authors: Greg Fitzgerald <greg@gregf.org>
+Authors: 
+- Greg Fitzgerald <greg@gregf.org>
+- Christian Fischer <chef-cookbooks@computerlyrik.de>
 
 ```
 # Copyright 2013, Greg Fitzgerald.
+# Copyright 2013, Christian Fischer.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
