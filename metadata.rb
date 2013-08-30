@@ -9,6 +9,7 @@ version          "0.3.0"
 recipe           'prosody', 'Installs sudo and configures prosody'
 
 depends          "apt"
+depends          "yum"
 depends          "mercurial"
 depends          "ark"
 
