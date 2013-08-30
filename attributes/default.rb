@@ -37,13 +37,13 @@ when "package"
   default['prosody']['plugin_dir'] = "/usr/local/lib/prosody/modules"
   default['prosody']['conf_dir'] = "/etc/prosody"
   default['prosody']['package'] = "prosody"
+  default['prosody']['luasec_package'] = 'lua-sec-prosody'
   case node["platform"]
+  #setup correct package for lua-event
   when "debian"
     default['prosody']['libevent_package'] = 'liblua5.1-event0'
-    default['prosody']['luasec_package'] = 'lua-sec-prosody'
   when "ubuntu"
-    default['prosody']['luasec_package'] = 'lua-sec-prosody'
-    case node["platform"]["version"]
+    case node["platform_version"]
     when "12.10"
       default['prosody']['libevent_package'] = 'lua-event'
     else 
