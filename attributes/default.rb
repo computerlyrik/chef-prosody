@@ -38,18 +38,11 @@ when "package"
   default['prosody']['conf_dir'] = "/etc/prosody"
   default['prosody']['package'] = "prosody"
   default['prosody']['luasec_package'] = 'lua-sec-prosody'
-  case node["platform"]
-  #setup correct package for lua-event
-  when "debian"
-    default['prosody']['libevent_package'] = 'liblua5.1-event0'
-  when "ubuntu"
-    case node["platform_version"]
-    when "12.10"
-      default['prosody']['libevent_package'] = 'lua-event'
-    else 
-      default['prosody']['libevent_package'] = 'liblua5.1-event0'
-    end
-  end
+  default['prosody']['libevent_package'] = value_for_platform(
+    "debian" => 'liblua5.1-event0',
+    "ubuntu" => { ["10.04", "10.10", "11.04", "11.10"] => "liblua5.1-event0",
+                  "default" => "lua-event" }
+  )
 when "source" #git
   default['prosody']['src_dir'] = "/prosody"
   default['prosody']['version'] = '0.9.0'
