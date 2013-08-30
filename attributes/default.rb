@@ -52,7 +52,7 @@ when "package"
   end
 when "source" #git
   default['prosody']['src_dir'] = "/prosody"
-  default['prosody']['version'] = '0.9'
+  default['prosody']['version'] = '0.9.0'
   default['prosody']['plugin_dir'] = ::File.join(node['prosody']['src_dir'], "plugins")
   default['prosody']['conf_dir'] = node['prosody']['src_dir']
 end
