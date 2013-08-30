@@ -44,5 +44,5 @@ end
   package pkg
 end
 
-include_recipe "prosody"
+include_recipe "prosody::config"
 
