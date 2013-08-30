@@ -24,8 +24,6 @@ case node["platform_family"]
 when "debian"
   default["prosody"]["repository"] = "debian"
   default["prosody"]["install_method"] = "package"
-
-
 when "fedora"
   default["prosody"]["repository"] = "epel"
   default["prosody"]["install_method"] = "package"
