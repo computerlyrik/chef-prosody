@@ -24,9 +24,8 @@ case node["platform_family"]
 when "debian"
   default["prosody"]["repository"] = "debian"
   default["prosody"]["install_method"] = "package"
-when "ubuntu"
-  default["prosody"]["repository"] = "ubuntu"
-  default["prosody"]["install_method"] = "package" 
+
+
 when "fedora"
   default["prosody"]["repository"] = "epel"
   default["prosody"]["install_method"] = "package"
@@ -40,8 +39,19 @@ when "package"
   default['prosody']['plugin_dir'] = "/usr/local/lib/prosody/modules"
   default['prosody']['conf_dir'] = "/etc/prosody"
   default['prosody']['package'] = "prosody"
-  default['prosody']['libevent_package'] = 'liblua5.1-event0'
-  default['prosody']['luasec_package'] = 'lua-sec-prosody'
+  case node["platform"]
+  when "debian"
+    default['prosody']['libevent_package'] = 'liblua5.1-event0'
+    default['prosody']['luasec_package'] = 'lua-sec-prosody'
+  when "ubuntu"
+    default['prosody']['luasec_package'] = 'lua-sec-prosody'
+    case node["platform"]["version"]
+    when "12.10"
+      default['prosody']['libevent_package'] = 'lua-event'
+    else 
+      default['prosody']['libevent_package'] = 'liblua5.1-event0'
+    end
+  end
 when "source" #git
   default['prosody']['src_dir'] = "/prosody"
   default['prosody']['version'] = '0.9'
