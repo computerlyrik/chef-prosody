@@ -41,3 +41,12 @@ suites:
   attributes:
     prosody:
       install_type: "git"
+
+- name: ldap_auth
+  run_list:
+  - recipe[prosody]
+  - recipe[prosody-test]
+  attributes:
+    prosody:
+      authentication: "ldap"
+#      catchall: "cf"
