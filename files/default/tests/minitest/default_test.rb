@@ -5,7 +5,7 @@ require 'minitest/spec'
 
 describe_recipe 'prosody::default' do
   it "ensures prosody is installed" do
-    package("prosody-0.9").must_be_installed
+    package("prosody").must_be_installed
   end
 
   it "ensures a config file is present" do

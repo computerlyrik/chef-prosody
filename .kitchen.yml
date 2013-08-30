@@ -2,7 +2,6 @@
 driver_plugin: docker
 driver_config:
   docker_path: lxc-docker
-  require_chef_omnibus: latest
 
 platforms:
 - name: ubuntu-12.10
@@ -20,9 +19,25 @@ platforms:
   - recipe[apt]
 
 suites:
-- name: default
+- name: install_package
   run_list:
   - recipe[prosody]
   - recipe[prosody-test]
   - recipe[minitest-handler]
   attributes:
+
+- name: install_source
+  run_list:
+  - recipe[prosody]
+  - recipe[prosody-test]
+  attributes: 
+    prosody:
+      install_type: "source"
+
+- name: install_git
+  run_list:
+  - recipe[prosody]
+  - recipe[prosody-test]
+  attributes:
+    prosody:
+      install_type: "git"
