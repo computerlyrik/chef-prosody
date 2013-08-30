@@ -12,6 +12,7 @@ end
 
 action :install do
   install_files
+  new_resource.updated_by_last_action(true)
 end
 
 action :disable do

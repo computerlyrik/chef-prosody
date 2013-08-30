@@ -11,7 +11,7 @@
 -- Example: admins = { "user1@example.com", "user2@example.net" }
 <% unless node['prosody']['admins'].nil? %>
 admins = {
-<% node['prosody']['admins'].each do |admin| %>
+<% @admins.each do |admin| %>
   "<%= admin %>";
 <% end %>
 }
@@ -44,8 +44,6 @@ plugin_paths = {
 <% end -%>
 }
 
-allow_registration = <%= @allow_registration ? "true" : "false" %>
-
 daemonize = <%= @daemonize ? "true" : "false" %>
 
 pidfile = "<%= @pidfile %>"
@@ -54,7 +52,7 @@ pidfile = "<%= @pidfile %>"
 
 -- Disable account creation by default, for security
 -- For more information see http://prosody.im/doc/creating_accounts
-allow_registration = <%= node['prosody']['allow_registration'] %>
+allow_registration = <%= @allow_registration ? "true" : "false" %>
 
 -- These are the SSL/TLS-related settings. If you don't want
 -- to use SSL/TLS, you may comment or remove this

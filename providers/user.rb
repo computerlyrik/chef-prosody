@@ -38,6 +38,7 @@ action :create do
       not_if { jid_exists?(jid(vhost)) }
     end
   end
+  new_resource.updated_by_last_action(true)
 end
 
 action :remove do
@@ -47,6 +48,7 @@ action :remove do
       only_if { jid_exists?(jid(vhost)) }
     end
   end
+  new_resource.updated_by_last_action(true)
 end
 
 def jids

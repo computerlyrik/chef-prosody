@@ -47,6 +47,7 @@ action :create do
       not_if { ::File.exists?("#{cert_name}.crt") && ::File.exists?("#{cert_name}.key") }
     end
   end
+  new_resource.updated_by_last_action(true)
 end
 
 action :remove do
@@ -62,6 +63,7 @@ action :remove do
         end
       end
     end
+    new_resource.updated_by_last_action(true)
   else
     Chef::Log.info "#{ @current_resource } doesn't exist - can't delete."
   end
