@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/computerlyrik/chef-prosody.png?branch=master)](https://travis-ci.org/computerlyrik/chef-prosody)
+
 #Prosody Chef Cookbook
 
 ##Description
