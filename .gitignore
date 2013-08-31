@@ -1,0 +1,7 @@
+*.lock
+.bundle
+test/tmp
+test/version_tmp
+tmp
+metadata.json
+.kitchen
