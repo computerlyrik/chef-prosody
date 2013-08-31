@@ -5,63 +5,63 @@
 # Copyright 2013, Greg Fitzgerald.
 # Copyright 2013, Christian Fischer, computerlyrik.
 #
-# Licensed under the Apache License, Version 2.0 (the "License");
+# Licensed under the Apache License, Version 2.0 (the 'License');
 # you may not use this file except in compliance with the License.
 # You may obtain a copy of the License at
 #
 # http://www.apache.org/licenses/LICENSE-2.0
 #
 # Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
+# distributed under the License is distributed on an 'AS IS' BASIS,
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
 
-default['prosody']['install_type'] = "package" #source
+default['prosody']['install_type'] = 'package' #source
 
-case node["platform_family"]
-when "debian"
-  default["prosody"]["repository"] = "debian"
-  default["prosody"]["install_method"] = "package"
-when "fedora"
-  default["prosody"]["repository"] = "epel"
-  default["prosody"]["install_method"] = "package"
+case node['platform_family']
+when 'debian'
+  default['prosody']['repository'] = 'debian'
+  default['prosody']['install_method'] = 'package'
+when 'fedora'
+  default['prosody']['repository'] = 'epel'
+  default['prosody']['install_method'] = 'package'
 else
-  default["prosody"]["repository"] = nil
-  default["prosody"]["install_method"] = "source"
+  default['prosody']['repository'] = nil
+  default['prosody']['install_method'] = 'source'
 end
 
 case node['prosody']['install_type']
-when "package"
-  default['prosody']['plugin_dir'] = "/usr/local/lib/prosody/modules"
-  default['prosody']['conf_dir'] = "/etc/prosody"
-  default['prosody']['package'] = "prosody"
+when 'package'
+  default['prosody']['plugin_dir'] = '/usr/local/lib/prosody/modules'
+  default['prosody']['conf_dir'] = '/etc/prosody'
+  default['prosody']['package'] = 'prosody'
   default['prosody']['luasec_package'] = 'lua-sec-prosody'
   default['prosody']['libevent_package'] = value_for_platform(
-    "debian" => {"default" => 'liblua5.1-event0'},
-    "ubuntu" => { ["10.04", "10.10", "11.04", "11.10"] => "liblua5.1-event0",
-                  "default" => "lua-event" }
+    'debian' => { 'default' => 'liblua5.1-event0' },
+    'ubuntu' => { ['10.04', '10.10', '11.04', '11.10'] => 'liblua5.1-event0' },
+    'default' => 'lua-event'
   )
-when "source" #git
-  default['prosody']['src_dir'] = "/prosody"
+when 'source' #git
+  default['prosody']['src_dir'] = '/prosody'
   default['prosody']['version'] = '0.9.0'
-  default['prosody']['plugin_dir'] = ::File.join(node['prosody']['src_dir'], "plugins")
+  default['prosody']['plugin_dir'] = ::File.join(node['prosody']['src_dir'], 'plugins')
   default['prosody']['conf_dir'] = node['prosody']['src_dir']
 end
 
-default['prosody']['run_dir']      = "/var/run/prosody/"
-default['prosody']['vhosts_dir']   = ::File.join(node['prosody']['conf_dir'], "vhosts.d")
-default['prosody']['conf_d_dir']   = ::File.join(node['prosody']['conf_dir'], "conf.d")
+default['prosody']['run_dir']      = '/var/run/prosody/'
+default['prosody']['vhosts_dir']   = ::File.join(node['prosody']['conf_dir'], 'vhosts.d')
+default['prosody']['conf_d_dir']   = ::File.join(node['prosody']['conf_dir'], 'conf.d')
 default['prosody']['plugin_paths'] = [ node['prosody']['plugin_dir'] ] #http://prosody.im/doc/installing_modules
 default['prosody']['ssl_dir']      = ::File.join(node['prosody']['conf_dir'], 'certs')
 
-default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], "prosody.pid")
+default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], 'prosody.pid')
 
-default['prosody']['user']               = "prosody"
-default['prosody']['group']              = "prosody"
+default['prosody']['user']               = 'prosody'
+default['prosody']['group']              = 'prosody'
 default['prosody']['storage']            = 'internal'
-default['prosody']['authentication']     = "internal_plain" #ldap
+default['prosody']['authentication']     = 'internal_plain' #ldap
 default['prosody']['use_libevent']       = true
 default['prosody']['allow_registration'] = false
 
@@ -75,7 +75,7 @@ default['prosody']['daemonize'] = true
 default['prosody']['catchall'] = nil
 
 
-default['prosody']['admins'] = ["admin"]
+default['prosody']['admins'] = ['admin']
 default['prosody']['modules_disabled'] = []
 # For more information http://prosody.im/doc/modules_enabled
 default['prosody']['modules_enabled'] = %w( roster saslauth tls dialback disco
