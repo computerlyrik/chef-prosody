@@ -1,7 +1,5 @@
 ---
 driver_plugin: docker
-driver_config:
-  docker_path: lxc-docker
 
 platforms:
 - name: ubuntu-12.10
@@ -30,7 +28,8 @@ suites:
   run_list:
   - recipe[prosody]
   - recipe[prosody-test]
-  attributes: 
+  - recipe[minitest-handler]
+  attributes:
     prosody:
       install_type: "source"
 
@@ -38,6 +37,7 @@ suites:
   run_list:
   - recipe[prosody]
   - recipe[prosody-test]
+  - recipe[minitest-handler]
   attributes:
     prosody:
       install_type: "git"
@@ -46,6 +46,7 @@ suites:
   run_list:
   - recipe[prosody]
   - recipe[prosody-test]
+  - recipe[minitest-handler]
   attributes:
     prosody:
       authentication: "ldap"
