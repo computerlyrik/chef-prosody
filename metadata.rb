@@ -1,6 +1,6 @@
 name             'prosody'
 maintainer       "Greg Fitzgerald, computerlyrik"
-maintainer_email "chef-cookbooks@computerlyrik.de, greg@gregf.org"
+maintainer_email "greg@gregf.org, chef-cookbooks@computerlyrik.de"
 license          "Apache 2.0"
 description      "Installs/Configures prosody"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
