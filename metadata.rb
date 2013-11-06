@@ -12,6 +12,7 @@ depends          "apt"
 depends          "yum"
 depends          "mercurial"
 depends          "ark"
+depends          "build-essential"
 
 supports         "debian"
 supports         "ubuntu"
