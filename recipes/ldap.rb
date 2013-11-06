@@ -24,8 +24,6 @@ end
 
 Chef::Log.info "preparing for ldap"
 package "lua-ldap"
-#install or compile lualdap
-#to compile packages: liblua5.1-dev libldap-dev
  
 template ::File.join(node['prosody']['module_dir'], "mod_auth_ldap.lua") do
   mode 0644

@@ -13,7 +13,6 @@ when "epel"
 end
 
 
-
 if node['prosody']['s2s_secure_auth'] then
   package node['prosody']['luasec_package']
 end
