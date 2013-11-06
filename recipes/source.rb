@@ -44,20 +44,37 @@ unless FileTest.exists?(File.join(node['prosody']['bin_path'], "prosody"))
     end
   end
 
-  remote_file "prosody" do
-    path "#{Chef::Config[:file_cache_path]}/prosody.tar.gz"
-    checksum node['prosody']['sha256']
-    source "#{node['prosody']['base_url']}/prosody-#{node["prosody"]["version"]}.tar.gz"
+  link "/usr/include/lua.h" do
+    to "/usr/include/lua5.1/lua.h"
   end
 
-  execute "extract-prosody" do
-    command "cd #{Chef::Config[:file_cache_path]} && tar -xvf prosody.tar.gz"
-    creates "#{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']}"
-    only_if { Digest::SHA256.file(File.join(Chef::Config[:file_cache_path], 'prosody.tar.gz')).hexdigest == node['prosody']['sha256'] }
+  configure_opts = ""
+  case node['prosody']['source']['origin']
+  when "web"
+    remote_file "prosody" do
+      path "#{Chef::Config[:file_cache_path]}/prosody.tar.gz"
+      checksum node['prosody']['sha256']
+      source "#{node['prosody']['base_url']}/prosody-#{node["prosody"]["version"]}.tar.gz"
+    end
+
+    execute "extract-prosody" do
+      command "cd #{Chef::Config[:file_cache_path]} && tar -xvf prosody.tar.gz"
+      creates "#{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']}"
+      only_if { Digest::SHA256.file(File.join(Chef::Config[:file_cache_path], 'prosody.tar.gz')).hexdigest == node['prosody']['sha256'] }
+    end
+  when "mercurial"
+    include_recipe 'mercurial'
+    mercurial "#{Chef::Config[:file_cache_path]}/prosody-src" do
+      repository "http://hg.prosody.im/0.9"
+      action :clone
+      owner node['prosody']['user']
+      group node['prosody']['group']
+    end
+    configure_opts += " --ostype=debian"
   end
 
   execute "install-prosody" do
-    command "cd #{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']} && ./configure --prefix=/usr --sysconfdir=#{node['prosody']['conf_dir']} && make install clean"
+    command "cd #{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']} && ./configure"+configure_opts+" --prefix=/usr --sysconfdir=#{node['prosody']['conf_dir']} && make install clean"
   end
 end
 

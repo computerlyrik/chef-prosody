@@ -1,9 +1,7 @@
-include_recipe 'apt'
 
-# add the prosody repo; grab key from keyserver
-case node["prosody"]["repository"]
+case node["platform_family"]
 when "debian", "ubuntu"
-  include_recipe "apt"
+  include_recipe 'apt'
   apt_repository "prosody" do
     uri "http://packages.prosody.im/debian"
     distribution node['lsb']['codename']

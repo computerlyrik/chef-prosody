@@ -36,9 +36,15 @@ when "package"
   )
 when "source"
   default['prosody']['version'] = '0.9.1'
-  default['prosody']['source_packages'] = %w{lua lua-devel lua-event openssl-devel libidn-devel lua-filesystem lua-expat lua-dbi}
+  case node['platform_family']
+  when 'debian'
+    default['prosody']['source_packages'] = %w{lua5.1 liblua5.1-dev liblua5.1-event0 libssl-dev libidn11-dev lua5.1-filesystem lua5.1-expat lua5.1-dbi-mysql}
+  else
+    default['prosody']['source_packages'] = %w{lua lua-devel lua-event openssl-devel libidn-devel lua-filesystem lua-expat lua-dbi}
+  end
   default['prosody']['runtime'] = '/usr/bin/lua'
   default['prosody']['daemon'] = '/usr/bin/prosody'
+  default['prosody']['source']['origin'] = "web" #mercurial
   default['prosody']['base_url'] = 'http://prosody.im/downloads/source/'
   default['prosody']['sha256'] = '6cdea6fd6027bec621f7995709ca825a29aa5e066b321bfbb7785925c9f32cd5'
 end
