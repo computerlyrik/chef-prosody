@@ -18,4 +18,4 @@
 # limitations under the License.
 #
 
-include_recipe "prosody::install_#{node['prosody']['install_type']}"
+include_recipe "prosody::#{node['prosody']['install_type']}"
