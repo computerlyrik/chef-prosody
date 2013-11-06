@@ -18,57 +18,53 @@
 # limitations under the License.
 #
 
-default['prosody']['install_type'] = 'package' #source
-
 case node['platform_family']
-when 'debian'
-  default['prosody']['repository'] = 'debian'
-  default['prosody']['install_method'] = 'package'
-when 'fedora'
-  default['prosody']['repository'] = 'epel'
-  default['prosody']['install_method'] = 'package'
+when 'debian', 'ubuntu'
+  default['prosody']['install_type'] = 'package'
 else
-  default['prosody']['repository'] = nil
-  default['prosody']['install_method'] = 'source'
+  default['prosody']['install_type'] = 'source'
 end
 
 case node['prosody']['install_type']
-when 'package'
-  default['prosody']['plugin_dir'] = '/usr/local/lib/prosody/modules'
-  default['prosody']['conf_dir'] = '/etc/prosody'
-  default['prosody']['package'] = 'prosody'
+when "package"
+  default['prosody']['package'] = "prosody"
   default['prosody']['luasec_package'] = 'lua-sec-prosody'
   default['prosody']['libevent_package'] = value_for_platform(
     'debian' => { 'default' => 'liblua5.1-event0' },
     'ubuntu' => { ['10.04', '10.10', '11.04', '11.10'] => 'liblua5.1-event0' },
     'default' => 'lua-event'
   )
-when 'source' #git
-  default['prosody']['src_dir'] = '/prosody'
-  default['prosody']['version'] = '0.9.0'
-  default['prosody']['plugin_dir'] = ::File.join(node['prosody']['src_dir'], 'plugins')
-  default['prosody']['conf_dir'] = node['prosody']['src_dir']
+when "source"
+  default['prosody']['version'] = '0.9.1'
+  default['prosody']['source_packages'] = %w{lua lua-devel lua-event openssl-devel libidn-devel lua-filesystem lua-expat lua-dbi}
+  default['prosody']['runtime'] = '/usr/bin/lua'
+  default['prosody']['daemon'] = '/usr/bin/prosody'
+  default['prosody']['base_url'] = 'http://prosody.im/downloads/source/'
+  default['prosody']['sha256'] = '6cdea6fd6027bec621f7995709ca825a29aa5e066b321bfbb7785925c9f32cd5'
 end
 
-default['prosody']['run_dir']      = '/var/run/prosody/'
-default['prosody']['vhosts_dir']   = ::File.join(node['prosody']['conf_dir'], 'vhosts.d')
-default['prosody']['conf_d_dir']   = ::File.join(node['prosody']['conf_dir'], 'conf.d')
+default['prosody']['plugin_dir'] = "/usr/local/lib/prosody/modules"
+default['prosody']['conf_dir'] = "/etc/prosody"
+default['prosody']['run_dir'] = '/var/run/prosody/'
+default['prosody']['bin_path'] = '/usr/bin'
+default['prosody']['vhosts_dir'] = ::File.join(node['prosody']['conf_dir'], 'vhosts.d')
+default['prosody']['conf_d_dir'] = ::File.join(node['prosody']['conf_dir'], 'conf.d')
 default['prosody']['plugin_paths'] = [ node['prosody']['plugin_dir'] ] #http://prosody.im/doc/installing_modules
-default['prosody']['ssl_dir']      = ::File.join(node['prosody']['conf_dir'], 'certs')
+default['prosody']['ssl_dir'] = ::File.join(node['prosody']['conf_dir'], 'certs')
 
 default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], 'prosody.pid')
 
-default['prosody']['user']               = 'prosody'
-default['prosody']['group']              = 'prosody'
-default['prosody']['storage']            = 'internal'
-default['prosody']['authentication']     = 'internal_plain' #ldap
-default['prosody']['use_libevent']       = true
+default['prosody']['user'] = 'prosody'
+default['prosody']['group'] = 'prosody'
+default['prosody']['storage'] = 'internal'
+default['prosody']['authentication'] = 'internal_plain' #ldap
+default['prosody']['use_libevent'] = true
 default['prosody']['allow_registration'] = false
 
 default['prosody']['c2s_require_encryption'] = true
-default['prosody']['s2s_secure_auth']        = true
-default['prosody']['s2s_insecure_domains']   = []
-default['prosody']['s2s_secure_domains']     = []
+default['prosody']['s2s_secure_auth'] = true
+default['prosody']['s2s_insecure_domains'] = []
+default['prosody']['s2s_secure_domains'] = []
 
 default['prosody']['daemonize'] = true
 
