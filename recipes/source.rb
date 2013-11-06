@@ -64,7 +64,7 @@ unless FileTest.exists?(File.join(node['prosody']['bin_path'], "prosody"))
     end
   when "mercurial"
     include_recipe 'mercurial'
-    mercurial "#{Chef::Config[:file_cache_path]}/prosody-src" do
+    mercurial "#{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']}" do
       repository "http://hg.prosody.im/0.9"
       action :clone
       owner node['prosody']['user']
