@@ -30,7 +30,7 @@ when "package"
   default['prosody']['package'] = "prosody"
   default['prosody']['luasec_package'] = 'lua-sec-prosody'
   default['prosody']['libevent_package'] = value_for_platform(
-    'debian' => { 'default' => 'liblua5.1-event0' },
+    'debian' => { 'default' => 'lua-event' },
     'ubuntu' => { ['10.04', '10.10', '11.04', '11.10'] => 'liblua5.1-event0' },
     'default' => 'lua-event'
   )
