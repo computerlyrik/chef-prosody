@@ -35,7 +35,8 @@ action :create do
           'admins' => new_resource.admins,
           'modules_enabled' => new_resource.modules_enabled,
           'enabled' => new_resource.enabled,
-          'ssl' => new_resource.ssl
+          'ssl' => new_resource.ssl,
+          'muc' => new_resource.muc,
         }
       })
       notifies :reload, "service[prosody]", :immediately
