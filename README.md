@@ -119,6 +119,11 @@ This sets the default location of the pid file to /var/run/prosody/prosody.pid. 
       <td>&nbsp;</td>
     </tr>
     <tr>
+      <td>muc</td>
+      <td>Supply a servername prosody will serve a MUC on</td>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
       <td>enabled</td>
       <td>Enable or Disable the virtual host</td>
       <td>true</td>
@@ -139,6 +144,7 @@ prosody_vhost 'redneck.im'
 prosody_vhost 'redneck.im' do
   admins %w[jimbob@redneck.im]
   modules_enabled %w[dialback roster saslauth]
+  muc "conference.redneck.im"
   enabled true
 end
 ```
