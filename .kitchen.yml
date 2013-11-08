@@ -56,10 +56,11 @@ suites:
 - name: ldap_auth
   run_list:
   - recipe[prosody]
+  - recipe[prosody::ldap]
   - recipe[prosody-test]
   - recipe[minitest-handler]
   attributes:
     prosody:
       install_type: "package"
       authentication: "ldap"
-      catchall: "myCatchall"
+#      catchall: "myCatchall"
