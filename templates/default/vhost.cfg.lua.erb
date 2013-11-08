@@ -25,4 +25,8 @@ VirtualHost "<%= @config['vhost'] %>"
   }
 <% end %>
 
+<% if @config['muc'] %>
+Component "<%= @config['muc'] %>" "muc"
+<% end %>
+
 

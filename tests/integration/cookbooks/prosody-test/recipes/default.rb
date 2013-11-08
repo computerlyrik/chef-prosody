@@ -8,6 +8,7 @@ include_recipe 'prosody'
 prosody_vhost 'redneck.im' do
   admins ['jimbob@redneck.im', 'daryl@redneck.im']
   modules_enabled ['dialback', 'roster', 'saslauth']
+  muc 'conference.redneck.im'
   enabled true
 end
 
