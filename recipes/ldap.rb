@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-unless Chef::Config[:solo]
+if Chef::Config[:solo]
   Chef::Log.warn("This recipe uses search. Chef Solo does not support search.")
   return
 end
@@ -25,7 +25,7 @@ end
 Chef::Log.info "preparing for ldap"
 package "lua-ldap"
  
-template ::File.join(node['prosody']['module_dir'], "mod_auth_ldap.lua") do
+template ::File.join(node['prosody']['plugin_dir'], "mod_auth_ldap.lua") do
   mode 0644
   notifies :restart, "service[prosody]"
 end
