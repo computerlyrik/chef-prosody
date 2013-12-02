@@ -1,26 +1,15 @@
 ---
-driver_plugin: vagrant
-driver_config:
-    require_chef_omnibus: 11.6.2
+driver_plugin: docker
 
 platforms:
 - name: ubuntu-12.10
-  run_list:
-  - recipe[apt]
-- name: ubuntu-12.04
-  run_list:
-  - recipe[apt]
-- name: debian-7
+- name: debian-6.0.7
   driver_config:
-    box: opscode-debian-7.1
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
+    image: tianon/debian:6.0.7
+    platform: debian
   run_list:
   - recipe[apt]
 - name: centos-6.4
-- name: fedora-19
-  driver_config:
-    box: opscode-fedora-18
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode-fedora-19_provisionerless.box
 
 suites:
 - name: from_package
@@ -30,6 +19,7 @@ suites:
   - recipe[minitest-handler]
   attributes:
       install_type: "package"
+
 
 - name: ldap_auth
   run_list:
@@ -64,5 +54,4 @@ suites:
       install_type: "source"
       source:
         origin: "mercurial"
-
 
