@@ -4,6 +4,7 @@ action :enable do
       node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] + [ new_resource.module ]
       node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [ new_resource.module ]
       node.save unless Chef::Config[:solo]
+      new_resource.updated_by_last_action(true)
     end
     notifies :create, "template[#{node['prosody']['conf_dir']}/prosody.cfg.lua]"
     not_if { current_resource.configured }
@@ -21,6 +22,7 @@ action :disable do
       node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] - [ new_resource.module ]
       node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [ new_resource.module ]
       node.save unless Chef::Config[:solo]
+      new_resource.updated_by_last_action(true)
     end
     only_if { current_resource.configured }
   end
