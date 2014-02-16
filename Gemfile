@@ -2,10 +2,16 @@ source 'https://rubygems.org'
 
 gem 'chef', '>=11.0'
 gem 'rake'
-gem 'foodcritic'
+gem 'berkshelf'
+
+group :test do
+  gem "foodcritic", "~> 3.0.3"
+  gem "strainer"
+  gem "rubocop"
+end
 
 group :integration do
-  gem 'berkshelf'
-  gem 'test-kitchen', '1.0.0.alpha.7'
+  gem 'test-kitchen', "~> 1.1.1"
+  gem "kitchen-vagrant", "~> 0.14"
   gem 'kitchen-docker'
 end
