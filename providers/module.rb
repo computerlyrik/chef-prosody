@@ -1,8 +1,8 @@
 action :enable do
   ruby_block "Configure module #{new_resource.module}" do
     block do
-      node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] + [ new_resource.module ]
-      node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [ new_resource.module ]
+      node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] + [new_resource.module]
+      node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [new_resource.module]
       node.save unless Chef::Config[:solo]
       new_resource.updated_by_last_action(true)
     end
@@ -19,8 +19,8 @@ end
 action :disable do
   ruby_block "Unconfigure module #{new_resource.module}" do
     block do
-      node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] - [ new_resource.module ]
-      node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [ new_resource.module ]
+      node.override['prosody']['modules_enabled'] = node['prosody']['modules_enabled'] - [new_resource.module]
+      node.override['prosody']['modules_disabled'] = node['prosody']['modules_disabled'] - [new_resource.module]
       node.save unless Chef::Config[:solo]
       new_resource.updated_by_last_action(true)
     end
@@ -40,7 +40,7 @@ def module_configured?(name)
 end
 
 def local_path(file)
-  return ::File.join(node['prosody']['plugin_dir'], "mod_#{current_resource.module}", file)
+  ::File.join(node['prosody']['plugin_dir'], "mod_#{current_resource.module}", file)
 end
 
 def install_files

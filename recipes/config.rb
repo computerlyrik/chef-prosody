@@ -16,23 +16,23 @@ node['prosody']['plugin_paths'].each do |dir|
 end
 
 directory node['prosody']['vhosts_dir'] do
-    owner "root"
-    group "prosody"
-    mode "0750"
-    action :create
+  owner "root"
+  group "prosody"
+  mode "0750"
+  action :create
 end
 
 directory node['prosody']['ssl_dir'] do
-    owner "root"
-    group "prosody"
-    mode "0750"
-    action :create
+  owner "root"
+  group "prosody"
+  mode "0750"
+  action :create
 end
 
 include_recipe "prosody::ldap" if node['prosody']['authentication'] == "ldap"
 
 prosody_module "listusers" do
-  files( "mod_listusers.lua" => "http://prosody.im/files/mod_listusers.lua" )
+  files("mod_listusers.lua" => "http://prosody.im/files/mod_listusers.lua")
   action :install
 end
 

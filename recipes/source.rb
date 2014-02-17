@@ -74,7 +74,7 @@ unless FileTest.exists?(File.join(node['prosody']['bin_path'], "prosody"))
   end
 
   execute "install-prosody" do
-    command "cd #{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']} && ./configure"+configure_opts+" --prefix=/usr --sysconfdir=#{node['prosody']['conf_dir']} && make install clean"
+    command "cd #{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']} && ./configure" + configure_opts + " --prefix=/usr --sysconfdir=#{node['prosody']['conf_dir']} && make install clean"
   end
 end
 

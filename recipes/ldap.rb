@@ -24,7 +24,7 @@ end
 
 Chef::Log.info "preparing for ldap"
 package "lua-ldap"
- 
+
 template ::File.join(node['prosody']['plugin_dir'], "mod_auth_ldap.lua") do
   mode 0644
   notifies :restart, "service[prosody]"

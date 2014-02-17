@@ -12,16 +12,14 @@ when "epel"
   include_recipe "yum::epel"
 end
 
-
-if node['prosody']['s2s_secure_auth'] then
+if node['prosody']['s2s_secure_auth']
   package node['prosody']['luasec_package']
 end
 
-if node['prosody']['use_libevent'] then
+if node['prosody']['use_libevent']
   package node['prosody']['libevent_package']
 end
 
 package node['prosody']['package']
-
 
 include_recipe 'prosody::config'

@@ -1,6 +1,6 @@
 require 'minitest/spec'
 #
-## Cookbook Name:: prosody 
+## Cookbook Name:: prosody
 ## Spec:: default
 
 describe_recipe 'prosody::default' do

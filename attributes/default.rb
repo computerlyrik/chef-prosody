@@ -44,7 +44,7 @@ when "source"
   end
   default['prosody']['runtime'] = '/usr/bin/lua'
   default['prosody']['daemon'] = '/usr/bin/prosody'
-  default['prosody']['source']['origin'] = "web" #mercurial
+  default['prosody']['source']['origin'] = "web" # mercurial
   default['prosody']['base_url'] = 'http://prosody.im/downloads/source/'
   default['prosody']['sha256'] = '6cdea6fd6027bec621f7995709ca825a29aa5e066b321bfbb7785925c9f32cd5'
 end
@@ -55,7 +55,7 @@ default['prosody']['run_dir'] = '/var/run/prosody/'
 default['prosody']['bin_path'] = '/usr/bin'
 default['prosody']['vhosts_dir'] = ::File.join(node['prosody']['conf_dir'], 'vhosts.d')
 default['prosody']['conf_d_dir'] = ::File.join(node['prosody']['conf_dir'], 'conf.d')
-default['prosody']['plugin_paths'] = [ node['prosody']['plugin_dir'] ] #http://prosody.im/doc/installing_modules
+default['prosody']['plugin_paths'] = [node['prosody']['plugin_dir']] # http://prosody.im/doc/installing_modules
 default['prosody']['ssl_dir'] = ::File.join(node['prosody']['conf_dir'], 'certs')
 
 default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], 'prosody.pid')
@@ -63,7 +63,7 @@ default['prosody']['pidfile'] = ::File.join(node['prosody']['run_dir'], 'prosody
 default['prosody']['user'] = 'prosody'
 default['prosody']['group'] = 'prosody'
 default['prosody']['storage'] = 'internal'
-default['prosody']['authentication'] = 'internal_plain' #ldap
+default['prosody']['authentication'] = 'internal_plain' # ldap
 default['prosody']['use_libevent'] = true
 default['prosody']['allow_registration'] = false
 
@@ -75,7 +75,6 @@ default['prosody']['s2s_secure_domains'] = []
 default['prosody']['daemonize'] = true
 
 default['prosody']['catchall'] = nil
-
 
 default['prosody']['admins'] = ['admin']
 default['prosody']['modules_disabled'] = []

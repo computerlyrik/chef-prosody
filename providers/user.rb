@@ -17,7 +17,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#use_inline_resources
+# use_inline_resources
 
 def whyrun_supported?
   true
@@ -52,11 +52,11 @@ action :remove do
 end
 
 def jids
-  return @current_resource.vhost.map {|v| jid(v,new_resource.username)}
+  @current_resource.vhost.map { |v| jid(v, new_resource.username) }
 end
 
 def jid(domain, username = current_resource.username)
-  return username + "@" + domain
+  username + "@" + domain
 end
 
 def jid_exists?(jid)

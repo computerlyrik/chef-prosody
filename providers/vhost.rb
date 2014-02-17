@@ -22,23 +22,23 @@ def whyrun_supported?
 end
 
 action :create do
-  converge_by ("Adding #{new_resource.vhost} to #{node['prosody']['vhosts_dir']}") do
+  converge_by "Adding #{new_resource.vhost} to #{node['prosody']['vhosts_dir']}" do
     template vhost_config_file do
       source "vhost.cfg.lua.erb"
       cookbook "prosody"
       owner "root"
       group "root"
       mode "0644"
-      variables({
+      variables(
         'config' => {
           'vhost' => new_resource.vhost,
           'admins' => new_resource.admins,
           'modules_enabled' => new_resource.modules_enabled,
           'enabled' => new_resource.enabled,
           'ssl' => new_resource.ssl,
-          'muc' => new_resource.muc,
+          'muc' => new_resource.muc
         }
-      })
+      )
       notifies :reload, "service[prosody]", :immediately
     end
 
@@ -73,7 +73,7 @@ end
 def load_current_resource
   @current_resource = Chef::Resource::ProsodyVhost.new(@new_resource.name)
   @current_resource.name(@new_resource.name)
-  @current_resource.vhost(@new_resource.vhost) 
+  @current_resource.vhost(@new_resource.vhost)
   @current_resource.exists = true if vhost_exist?(@current_resource.vhost)
 end
 

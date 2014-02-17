@@ -7,7 +7,7 @@ include_recipe 'prosody'
 
 prosody_vhost 'redneck.im' do
   admins ['jimbob@redneck.im', 'daryl@redneck.im']
-  modules_enabled ['dialback', 'roster', 'saslauth']
+  modules_enabled %w[dialback, roster, saslauth]
   muc 'conference.redneck.im'
   enabled true
 end
@@ -46,8 +46,7 @@ prosody_vhost 'flyfisher.com' do
   action :remove
 end
 
-
-prosody_module "roster" do 
+prosody_module "roster" do
   action [:install, :enable]
 end
 
