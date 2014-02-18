@@ -1,6 +1,6 @@
 #
 # Cookbook Name:: prosody
-# Recipe:: default
+# Recipe:: install
 #
 # Copyright 2013, Greg Fitzgerald
 # Copyright 2012, computerlyrik
@@ -18,4 +18,5 @@
 # limitations under the License.
 #
 
-include_recipe 'prosody::install'
+include_recipe 'prosody::repo'
+include_recipe "prosody::#{node['prosody']['install_type']}"

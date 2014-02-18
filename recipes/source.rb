@@ -26,6 +26,7 @@ user node['prosody']['user'] do
   comment 'Prosody XMPP Server'
   home '/var/lib/prosody'
   shell '/bin/false'
+  supports :manage_home => true
   action :create
 end
 
@@ -48,23 +49,25 @@ unless FileTest.exists?(File.join(node['prosody']['bin_path'], "prosody"))
     to "/usr/include/lua5.1/lua.h"
   end
 
+  source_path = ::File.join(Chef::Config[:file_cache_path], "prosody-#{node['prosody']['version']}")
+  directory source_path do
+    owner node['prosody']['user']
+    group node['prosody']['group']
+    recursive true
+  end
+
   configure_opts = ""
   case node['prosody']['source']['origin']
   when "web"
-    remote_file "prosody" do
-      path "#{Chef::Config[:file_cache_path]}/prosody.tar.gz"
+    ark "prosody" do
+      path source_path
       checksum node['prosody']['sha256']
-      source "#{node['prosody']['base_url']}/prosody-#{node["prosody"]["version"]}.tar.gz"
-    end
-
-    execute "extract-prosody" do
-      command "cd #{Chef::Config[:file_cache_path]} && tar -xvf prosody.tar.gz"
-      creates "#{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']}"
-      only_if { Digest::SHA256.file(File.join(Chef::Config[:file_cache_path], 'prosody.tar.gz')).hexdigest == node['prosody']['sha256'] }
+      url "#{node['prosody']['base_url']}/prosody-#{node["prosody"]["version"]}.tar.gz"
+      owner node['prosody']['user']
     end
   when "mercurial"
     include_recipe 'mercurial'
-    mercurial "#{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']}" do
+    mercurial source_path do
       repository "http://hg.prosody.im/0.9"
       action :clone
       owner node['prosody']['user']
@@ -74,30 +77,9 @@ unless FileTest.exists?(File.join(node['prosody']['bin_path'], "prosody"))
   end
 
   execute "install-prosody" do
-    command "cd #{Chef::Config[:file_cache_path]}/prosody-#{node['prosody']['version']} && ./configure" + configure_opts + " --prefix=/usr --sysconfdir=#{node['prosody']['conf_dir']} && make install clean"
+    command "./configure" + configure_opts + " --prefix=/usr --sysconfdir=#{node['prosody']['conf_dir']} && make install clean"
+    cwd source_path
   end
-end
-
-unless system(%q{lua -e "require 'zlib'"})
-  remote_file "lua-zlib" do
-    path "#{Chef::Config[:file_cache_path]}/lua-zlib-0.2.tar.gz"
-    source "https://github.com/brimworks/lua-zlib/archive/v0.2.tar.gz"
-  end
-
-  execute "extract-lua-zlib" do
-    command "cd #{Chef::Config[:file_cache_path]} && tar -xvf lua-zlib-0.2.tar.gz"
-    creates "#{Chef::Config[:file_cache_path]}/lua-zlib-0.2"
-  end
-
-  execute "install-lua-zlib" do
-    command "cd #{Chef::Config[:file_cache_path]}/lua-zlib-0.2 && make linux && [[ -d /usr/lib64 ]] && cp zlib.so /usr/lib64/lua/5.1 || cp zlib.so /usr/lib/lua/5.1"
-  end
-end
-
-directory "/var/log/prosody" do
-  owner "root"
-  group node['prosody']['group']
-  mode "0755"
 end
 
 include_recipe "prosody::config"
