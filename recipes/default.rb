@@ -19,3 +19,4 @@
 #
 
 include_recipe 'prosody::install'
+include_recipe 'prosody::config'

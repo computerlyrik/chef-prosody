@@ -74,5 +74,3 @@ unless FileTest.exists?(File.join(node['prosody']['bin_path'], "prosody"))
     cwd source_path
   end
 end
-
-include_recipe "prosody::config"
