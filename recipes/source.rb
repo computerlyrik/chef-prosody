@@ -18,17 +18,10 @@
 # limitations under the License.
 #
 
+include_recipe "prosody::_common"
+
 node.set['build_essential']['compiletime'] = true
 include_recipe 'build-essential'
-
-user node['prosody']['user'] do
-  system true
-  comment 'Prosody XMPP Server'
-  home '/var/lib/prosody'
-  shell '/bin/false'
-  supports :manage_home => true
-  action :create
-end
 
 directory node['prosody']['run_dir'] do
   mode 0755

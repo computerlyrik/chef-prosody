@@ -20,9 +20,3 @@ when 'source'
 when 'package'
   package 'lua-zlib'
 end
-
-directory "/var/log/prosody" do
-  owner "root"
-  group node['prosody']['group']
-  mode "0755"
-end
