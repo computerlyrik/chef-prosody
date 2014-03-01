@@ -1,0 +1,99 @@
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:             prosody
+# Required-Start:       $network $local_fs $remote_fs
+# Required-Stop:
+# Default-Start:        2 3 4 5
+# Default-Stop:         0 1 6
+# Short-Description:    Prosody XMPP Server
+### END INIT INFO
+
+set -e
+
+# /etc/init.d/prosody: start and stop Prosody XMPP server
+
+USER=prosody
+DAEMON=/usr/bin/prosody
+PIDFILE=/var/run/prosody/prosody.pid
+
+test -x "$DAEMON" || exit 0
+
+. /lib/lsb/init-functions
+
+start_prosody () {
+	mkdir -p `dirname $PIDFILE`
+	chown prosody:adm `dirname $PIDFILE`
+	if start-stop-daemon --start --quiet --pidfile "$PIDFILE" \
+		--chuid "$USER" --oknodo --user "$USER" --name lua \
+		--umask=027 --startas "$DAEMON"; 
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+stop_prosody () {
+	if start-stop-daemon --stop --quiet --retry 30 \
+		--oknodo --pidfile "$PIDFILE"; 
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+signal_prosody () {
+	if start-stop-daemon --stop --quiet --pidfile "$PIDFILE" \
+		--oknodo --signal $1; 
+	then
+		return 0
+	else
+		return 1
+	fi
+}
+
+case "$1" in
+  start)
+	log_daemon_msg "Starting Prosody XMPP Server" "prosody"
+	if start_prosody; then
+		log_end_msg 0;
+	else
+		log_end_msg 1;
+	fi
+	;;
+  stop)
+  	log_daemon_msg "Stopping Prosody XMPP Server" "prosody"
+  	if stop_prosody; then
+  		log_end_msg 0;
+  	else
+  		log_end_msg 1;
+  	fi
+	;;
+  force-reload|restart)
+  	log_daemon_msg "Restarting Prosody XMPP Server" "prosody"
+  	
+  	stop_prosody
+  	
+	if start_prosody; then
+  		log_end_msg 0;
+  	else
+  		log_end_msg 1;
+  	fi
+  	;;
+  reload)
+  	log_daemon_msg "Reloading Prosody XMPP Server" "prosody"
+  	
+	if signal_prosody 1; then
+  		log_end_msg 0;
+  	else
+  		log_end_msg 1;
+  	fi
+  	;;
+  *)
+  	log_action_msg "Usage: /etc/init.d/prosody {start|stop|restart|reload}"
+  	exit 1
+esac
+
+exit 0

@@ -21,33 +21,35 @@
 case node['platform_family']
 when 'debian', 'ubuntu'
   default['prosody']['install_type'] = 'package'
+  default['prosody']['lua-zlib']['install_type'] = "package"
 else
   default['prosody']['install_type'] = 'source'
+  default['prosody']['lua-zlib']['install_type'] = "source"
 end
 
-case node['prosody']['install_type']
-when "package"
-  default['prosody']['package'] = "prosody"
-  default['prosody']['luasec_package'] = 'lua-sec-prosody'
-  default['prosody']['libevent_package'] = value_for_platform(
-    'debian' => { 'default' => 'lua-event' },
-    'ubuntu' => { ['10.04', '10.10', '11.04', '11.10'] => 'liblua5.1-event0' },
-    'default' => 'lua-event'
-  )
-when "source"
-  default['prosody']['version'] = '0.9.1'
-  case node['platform_family']
-  when 'debian'
-    default['prosody']['source_packages'] = %w{lua5.1 liblua5.1-dev liblua5.1-event0 libssl-dev libidn11-dev lua5.1-filesystem lua5.1-expat lua5.1-dbi-mysql}
-  else
-    default['prosody']['source_packages'] = %w{lua lua-devel lua-event openssl-devel libidn-devel lua-filesystem lua-expat lua-dbi}
-  end
-  default['prosody']['runtime'] = '/usr/bin/lua'
-  default['prosody']['daemon'] = '/usr/bin/prosody'
-  default['prosody']['source']['origin'] = "web" # mercurial
-  default['prosody']['base_url'] = 'http://prosody.im/downloads/source/'
-  default['prosody']['sha256'] = '6cdea6fd6027bec621f7995709ca825a29aa5e066b321bfbb7785925c9f32cd5'
+# Package
+default['prosody']['package'] = "prosody"
+default['prosody']['luasec_package'] = 'lua-sec-prosody'
+default['prosody']['libevent_package'] = value_for_platform(
+  'debian' => { 'default' => 'lua-event' },
+  'ubuntu' => { ['10.04', '10.10', '11.04', '11.10'] => 'liblua5.1-event0' },
+  'default' => 'lua-event'
+)
+
+# Source
+default['prosody']['version'] = '0.9.1'
+case node['platform_family']
+when 'debian'
+  source_packages = %w{lua5.1 liblua5.1-dev libssl-dev libidn11-dev lua-filesystem lua-expat lua-dbi-mysql}
+else
+  source_packages = %w{lua lua-devel openssl-devel libidn-devel lua-filesystem lua-expat lua-dbi}
 end
+default['prosody']['source_packages'] = source_packages << node['prosody']['libevent_package']
+default['prosody']['runtime'] = '/usr/bin/lua'
+default['prosody']['daemon'] = '/usr/bin/prosody'
+default['prosody']['source']['origin'] = "web" # mercurial
+default['prosody']['base_url'] = 'http://prosody.im/downloads/source/'
+default['prosody']['sha256'] = '6cdea6fd6027bec621f7995709ca825a29aa5e066b321bfbb7785925c9f32cd5'
 
 default['prosody']['plugin_dir'] = "/usr/local/lib/prosody/modules"
 default['prosody']['conf_dir'] = "/etc/prosody"
