@@ -4,7 +4,7 @@ maintainer_email "greg@gregf.org, chef-cookbooks@computerlyrik.de"
 license          "Apache 2.0"
 description      "Installs/Configures prosody"
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          "0.4.0"
+version          "0.5.0"
 
 recipe           'prosody', 'Installs sudo and configures prosody'
 
