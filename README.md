@@ -220,6 +220,10 @@ e.g.
 5. Run the tests, ensuring they all pass
 6. Submit a Pull Request using Github
 
+### Testing
+```
+bundle exec strainer test
+```
 ##License and Authors
 
 Authors: 
@@ -228,7 +232,8 @@ Authors:
 
 ```
 # Copyright 2013, Greg Fitzgerald.
-# Copyright 2013, Christian Fischer.
+# Copyright 2013, 2014 Christian Fischer, prosody-cookbook@computerlyrik.de
+# Copyright 2013, 2014 Guilhem Lettron 
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
