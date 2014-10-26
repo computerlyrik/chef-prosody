@@ -30,6 +30,12 @@ end
 # Package
 default['prosody']['package'] = "prosody"
 default['prosody']['luasec_package'] = 'lua-sec-prosody'
+
+default['prosody']['luasec_package'] = value_for_platform(
+  'ubuntu' => { ['14.04', '14.10'] => 'lua-sec' },
+  'default' => 'lua-sec-prosody'
+)
+
 default['prosody']['libevent_package'] = value_for_platform(
   'debian' => { 'default' => 'lua-event' },
   'ubuntu' => { ['10.04', '10.10', '11.04', '11.10'] => 'liblua5.1-event0' },
