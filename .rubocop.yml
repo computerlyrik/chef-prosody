@@ -1,5 +1,5 @@
 AllCops:
-  Excludes:
+  Exclude:
     - vendor/**
     - metadata.rb
     - tests/integration/cookbooks/prosody-test/metadata.rb
@@ -16,3 +16,5 @@ LineLength:
   Enabled: false
 MethodLength:
   Max: 30
+Style/FileName:
+  Enabled: false
