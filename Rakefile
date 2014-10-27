@@ -21,7 +21,7 @@ task :knife do
 end
 
 desc "Runs test-kitchen tests"
-task :kitchen, :regex do |t, args|
+task :kitchen, :regex do |_t, args|
   # Skip if on Travis an no secure vars avail.
   next if ENV['TRAVIS_SECURE_ENV_VARS'] == "false"
 
@@ -33,7 +33,7 @@ task :kitchen, :regex do |t, args|
 end
 
 task :prepare_sandbox do
-  files = %w{*.md *.rb attributes definitions libraries files providers recipes resources templates}
+  files = %w(  *.md *.rb attributes definitions libraries files providers recipes resources templates  )
 
   rm_rf sandbox_path
   mkdir_p sandbox_path
@@ -43,7 +43,7 @@ end
 private
 
 def sandbox_path
-  File.join(File.dirname(__FILE__), %w[tmp cookbooks cookbook])
+  File.join(File.dirname(__FILE__), %w(  tmp cookbooks cookbook  ))
 end
 
 # vim: ai et ts=2 sts=2 sw=2 ft=ruby fdm=marker

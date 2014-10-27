@@ -46,9 +46,9 @@ default['prosody']['libevent_package'] = value_for_platform(
 default['prosody']['version'] = '0.9.1'
 case node['platform_family']
 when 'debian'
-  source_packages = %w{lua5.1 liblua5.1-dev libssl-dev libidn11-dev lua-filesystem lua-expat lua-dbi-mysql}
+  source_packages = %w(  lua5.1 liblua5.1-dev libssl-dev libidn11-dev lua-filesystem lua-expat lua-dbi-mysql  )
 else
-  source_packages = %w{lua lua-devel openssl-devel libidn-devel lua-filesystem lua-expat lua-dbi}
+  source_packages = %w(  lua lua-devel openssl-devel libidn-devel lua-filesystem lua-expat lua-dbi  )
 end
 default['prosody']['source_packages'] = source_packages << node['prosody']['libevent_package']
 default['prosody']['runtime'] = '/usr/bin/lua'

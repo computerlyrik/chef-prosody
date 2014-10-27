@@ -45,7 +45,7 @@ action :create do
     execute "Generating vhost certs for #{vhost}" do
       command ssl_cmd
       only_if { new_resource.ssl }
-      not_if { ::File.exists?("#{cert_name}.crt") && ::File.exists?("#{cert_name}.key") }
+      not_if { ::File.exist?("#{cert_name}.crt") && ::File.exist?("#{cert_name}.key") }
     end
   end
   new_resource.updated_by_last_action(true)
@@ -101,5 +101,5 @@ def subj
 end
 
 def vhost_exist?(vhost)
-  ::File.exists?(vhost_config_file(vhost))
+  ::File.exist?(vhost_config_file(vhost))
 end

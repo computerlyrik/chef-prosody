@@ -7,7 +7,7 @@ include_recipe 'prosody'
 
 prosody_vhost 'redneck.im' do
   admins ['jimbob@redneck.im', 'daryl@redneck.im']
-  modules_enabled %w[dialback, roster, saslauth]
+  modules_enabled %w(  dialback, roster, saslauth  )
   muc 'conference.redneck.im'
   enabled true
 end
@@ -18,7 +18,7 @@ prosody_vhost 'example.com' do
 end
 
 prosody_vhost 'flyfisher.com' do
-  enabled  true
+  enabled true
 end
 
 prosody_vhost 'axechat.com'
@@ -29,7 +29,7 @@ prosody_user 'jimbob' do
 end
 
 prosody_user 'daryl' do
-  password  'bigbuckhunt3r'
+  password 'bigbuckhunt3r'
   vhosts "redneck.im"
 end
 
