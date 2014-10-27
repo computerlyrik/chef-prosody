@@ -1,6 +1,8 @@
 AllCops:
   Excludes:
     - vendor/**
+    - metadata.rb
+    - tests/integration/cookbooks/prosody-test/metadata.rb
 
 AlignParameters:
   Enabled: false
