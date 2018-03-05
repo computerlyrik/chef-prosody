@@ -3,7 +3,7 @@ user node['prosody']['user'] do
   comment 'Prosody XMPP Server'
   home '/var/lib/prosody'
   shell '/bin/false'
-  supports :manage_home => true
+  manage_home true
   action :create
 end
 
